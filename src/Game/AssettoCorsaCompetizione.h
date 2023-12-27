@@ -9,11 +9,12 @@ class AssettoCorsaCompetizione : public Game {
 			isKeyboard = true;
 		}
 		void button(unsigned char button, bool pressed) override {
-			Serial.print("AssettoCorsaCompetizione: ");
-			Serial.print(button);
-			Serial.print(" ");
-			Serial.println(pressed);
-
+			if (Serial) {
+				Serial.print("AssettoCorsaCompetizione: ");
+				Serial.print(button);
+				Serial.print(" ");
+				Serial.println(pressed);
+			}
 			switch (button) {
 				case B_ENGINE:
 					this->startEngine(pressed);
@@ -151,10 +152,11 @@ class AssettoCorsaCompetizione : public Game {
 					this->cycleMap(pressed);
 					break;
 				default:
-					Serial.print("Unknown button: ");
-					Serial.println(button);
+					if (Serial) {
+						Serial.print("Unknown button: ");
+						Serial.println(button);
+					}
 					break;
-
 			}
 		}
 

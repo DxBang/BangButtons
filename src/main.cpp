@@ -21,9 +21,11 @@
 #include <Game/GameKeyboard.h>
 #include <Game/GameJoystick.h>
 
-#define DEBUG true
-#define SLEEP_TIME 10000
-#define HYPER_SLEEP_TIME 30000
+#define DEBUG false
+// 15 mins
+#define SLEEP_TIME 900000
+// 30 mins
+#define HYPER_SLEEP_TIME 1800000
 
 
 void hyperSleep();
@@ -31,7 +33,6 @@ void sleep();
 void wakeUp();
 void stayAwake();
 void checkSleep();
-
 
 // bool shift = false;
 unsigned long timer = 0;
@@ -43,7 +44,6 @@ unsigned long shiftDuration = 3000;
 
 unsigned long pressTimer = 0;
 unsigned long pressDuration = 1000;
-
 
 unsigned char sleeping = 0;
 unsigned long sleepTimer = 0;
@@ -97,7 +97,7 @@ Controller controllers[] = {
 	Controller(
 		"Assetto Corsa Competizione",
 		new AssettoCorsaCompetizione(),
-		new Color(100, 1.0, 0.5),
+		new Color(120, 1.0, 0.25),
 		new Color(120, 1.0, 0.5),
 		new Color(180, 1.0, 0.5),
 		0.6
@@ -128,7 +128,6 @@ void setController(unsigned char index) {
 	controller.unshift();
 }
 
-
 void vibrate(bool toggle) {
 	if (toggle) {
 		analogWrite(
@@ -142,11 +141,9 @@ void vibrate(bool toggle) {
 	vibrateTimer = 0;
 }
 
-
 void buttonEvent(KeypadEvent button) {
 	stayAwake();
 	bool pressed = false;
-
 	switch (buttons.getState()) {
 		case PRESSED:
 			pressed = true;
@@ -160,20 +157,26 @@ void buttonEvent(KeypadEvent button) {
 		if (pressed) {
 			vibrate(true);
 			if (controller.isShifted()) {
-				Serial.println("UNSHIFT");
+				if (DEBUG) {
+					Serial.println("UNSHIFT");
+				}
 				controller.unshift();
 				RGB rgb = controller.color->getRGB();
 				setRGB(rgb.r, rgb.g, rgb.b);
 				shiftTimer = 0;
 				return; 
 			}
-			Serial.println("SHIFT");
+			if (DEBUG) {
+				Serial.println("SHIFT");
+			}
 			controller.shift();
 			shiftTimer = timer;
 			RGB rgb = controller.colorShifted->getRGB();
 			setRGB(rgb.r, rgb.g, rgb.b);
-			Serial.print("SHIFTED: ");
-			Serial.println(controller.isShifted());
+			if (DEBUG) {
+				Serial.print("SHIFTED: ");
+				Serial.println(controller.isShifted());
+			}
 			return;
 		}
 		return;
@@ -186,7 +189,6 @@ void buttonEvent(KeypadEvent button) {
 				setController(controllerIndex + 1);
 				return;
 			}
-
 			controller.button((button + SHIFTED), pressed);
 			RGB rgb = controller.colorPressed->getRGB();
 			setRGB(rgb.r, rgb.g, rgb.b);
@@ -267,8 +269,10 @@ void sleep() {
 
 void setup() {
 	delay(5000);
-	Serial.begin(115200);
-	Serial.println("Bang Buttons v1.0");
+	if (DEBUG) {
+		Serial.begin(115200);
+		Serial.println("Bang Buttons v1.0");
+	}
 	bootAnimation();
 	buttons.setHoldTime(500);
 	buttons.setDebounceTime(20);
@@ -295,7 +299,6 @@ void loop() {
 	if (vibrateTimer && (timer - vibrateTimer > vibrateDuration)) {
 		vibrate(false);
 	}
-
 	switch (sleeping) {
 		case 1: // unit is sleeping, should it go to hyper sleep?
 			// 20 loops per second
@@ -316,13 +319,14 @@ void loop() {
 			}
 		break;
 	}
-
-	loopCount++;
-	if (timer - debugTimer > 10000) {
-		Serial.print("Loop Count: ");
-		Serial.println(loopCount);
-		loopCount = 0;
-		debugTimer = timer;
+	if (DEBUG) {
+		loopCount++;
+		if (timer - debugTimer > 10000) {
+			Serial.print("Loop Count: ");
+			Serial.println(loopCount);
+			loopCount = 0;
+			debugTimer = timer;
+		}
 	}
 
 }
