@@ -160,7 +160,6 @@ class AssettoCorsaCompetizione : public Game {
 			}
 		}
 
-
 	private:
 		void held(bool pressed) { // B_SHIFT
 			if (pressed) {
@@ -194,7 +193,6 @@ class AssettoCorsaCompetizione : public Game {
 				this->release(KEY_LEFT_SHIFT);
 			}
 		}
-		
 		void pitLimiter(bool pressed) { // B_PIT_LIMITER
 			if (pressed) {
 				if (Serial) {
@@ -672,5 +670,4 @@ class AssettoCorsaCompetizione : public Game {
 				this->tap(KEY_KP_MINUS);
 			}
 		}
-
 };

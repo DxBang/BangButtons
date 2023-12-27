@@ -123,8 +123,12 @@ void setController(unsigned char index) {
 	RGB rgb = controller.color->getRGB();
 	setRGB(rgb.r, rgb.g, rgb.b);
 	intensity = controller.getIntensity();
-	Serial.print("Controller: ");
-	Serial.println(controller.name);
+	if (DEBUG) {
+		Serial.print("Controller: ");
+		Serial.println(controller.name);
+		Serial.print("Intensity: ");
+		Serial.println(intensity);
+	}
 	controller.unshift();
 }
 
@@ -192,6 +196,7 @@ void buttonEvent(KeypadEvent button) {
 			controller.button((button + SHIFTED), pressed);
 			RGB rgb = controller.colorPressed->getRGB();
 			setRGB(rgb.r, rgb.g, rgb.b);
+			controller.unshift();
 			return;
 		}
 		RGB rgb = controller.colorPressed->getRGB();

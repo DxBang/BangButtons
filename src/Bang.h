@@ -164,6 +164,9 @@ class Game {
 		int recurrenceDelay = 100;
 		Game() {};
 		virtual void button(unsigned char button, bool pressed) {
+			if (!Serial) {
+				return;
+			}
 			if (pressed) {
 				Serial.print("BUTTON PRESSED: ");
 			} else {
@@ -171,7 +174,6 @@ class Game {
 			}
 			Serial.println(button);
 		};
-
 		virtual void begin() {};
 		virtual void end() {};
 		void hold(char key, unsigned char miliseconds = 0) {
@@ -205,7 +207,6 @@ class Game {
 		void push(char key) {
 			Keyboard.press(key);
 		}
-
 };
 
 class Controller {
@@ -255,5 +256,4 @@ class Controller {
 		bool isShifted() {
 			return this->game->shift;
 		};
-
 };
