@@ -7,10 +7,6 @@
 #ifndef KEYBOARD_h
 	#include <Keyboard.h>
 #endif
-#ifndef BUTTONS_h
-	#include <Buttons.h>
-#endif
-
 
 #define R_PIN 9
 #define G_PIN 10
