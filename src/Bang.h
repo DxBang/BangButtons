@@ -69,32 +69,32 @@ struct HSL {
 
 class Color {
 	private:
-		unsigned int hue;
+		unsigned short hue;
 		float saturation;
 		float lightness;
 
 	public:
-		Color(int h, float s, float l) : hue(h), saturation(s), lightness(l) {}
+		Color(unsigned short h, float s, float l) : hue(h), saturation(s), lightness(l) {}
 
-		void setHSL(int h, float s, float l) {
+		void setHSL(unsigned short h, float s, float l) {
 			hue = h;
 			saturation = s;
 			lightness = l;
 		}
-		void setHue(int h) {
+		void setHue(unsigned short h) {
 			hue = h;
-		}
-		int getHue() {
-			return hue;
 		}
 		void setSaturation(float s) {
 			saturation = s;
 		}
-		float getSaturation() {
-			return saturation;
-		}
 		void setLightness(float l) {
 			lightness = l;
+		}
+		unsigned short getHue() {
+			return hue;
+		}
+		float getSaturation() {
+			return saturation;
 		}
 		float getLightness() {
 			return lightness;
@@ -166,7 +166,7 @@ class Game {
 		virtual void begin() {};
 		virtual void end() {};
 		/* keybaord */
-		void keyPress(char key) {
+		void keyPress(unsigned char key) {
 			/*
 			if (DEBUG) {
 				Serial.print("press: ");
@@ -175,7 +175,7 @@ class Game {
 			*/
 			Keyboard.press(key);
 		}
-		void keyHold(char key, unsigned int miliseconds = 0) {
+		void keyHold(unsigned char key, unsigned int miliseconds = 0) {
 			/*
 			if (DEBUG) {
 				Serial.print("KEY HOLD: ");
@@ -193,7 +193,7 @@ class Game {
 				Keyboard.press(key);
 			}
 		}
-		void keyTap(char key, unsigned char times = 1) {
+		void keyTap(unsigned char key, unsigned char times = 1) {
 			/*
 			if (DEBUG) {
 				Serial.print("KEY TAP: ");
@@ -213,7 +213,7 @@ class Game {
 				delay(this->recurrenceDelay);
 			}
 		}
-		void keyRelease(char key) {
+		void keyRelease(unsigned char key) {
 			/*
 			if (DEBUG) {
 				Serial.print("KEY RELEASE: ");

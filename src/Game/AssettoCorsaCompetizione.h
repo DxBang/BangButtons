@@ -94,29 +94,59 @@ class AssettoCorsaCompetizione : public Game {
 				case B_BB_DOWN:
 					this->brakeBiasDown(pressed);
 					break;
+				case BANGED + B_BB_UP:
+					this->brakeBiasUp(pressed, 10);
+					break;
+				case BANGED + B_BB_DOWN:
+					this->brakeBiasDown(pressed, 10);
+					break;
 				case B_TC_UP:
 					this->tractionControlUp(pressed);
+					break;
+				case BANGED + B_TC_UP:
+					this->tractionControlUp(pressed, 3);
 					break;
 				case B_TC_DOWN:
 					this->tractionControlDown(pressed);
 					break;
+				case BANGED + B_TC_DOWN:
+					this->tractionControlDown(pressed, 3);
+					break;
 				case B_ABS_UP:
 					this->antilockBrakingSystemUp(pressed);
+					break;
+				case BANGED + B_ABS_UP:
+					this->antilockBrakingSystemUp(pressed, 3);
 					break;
 				case B_ABS_DOWN:
 					this->antilockBrakingSystemDown(pressed);
 					break;
+				case BANGED + B_ABS_DOWN:
+					this->antilockBrakingSystemDown(pressed, 3);
+					break;
 				case B_TCC_UP:
 					this->tractionControlCutUp(pressed);
+					break;
+				case BANGED + B_TCC_UP:
+					this->tractionControlCutUp(pressed, 3);
 					break;
 				case B_TCC_DOWN:
 					this->tractionControlCutDown(pressed);
 					break;
+				case BANGED + B_TCC_DOWN:
+					this->tractionControlCutDown(pressed, 3);
+					break;				
 				case B_EM_UP:
 					this->engineMapUp(pressed);
 					break;
+				case BANGED + B_EM_UP:
+					this->engineMapUp(pressed, 3);
+					break;
 				case B_EM_DOWN:
 					this->engineMapDown(pressed);
+					break;
+				case BANGED + B_EM_DOWN:
+					this->engineMapDown(pressed, 3);
 					break;
 				case B_ADD_HIGHLIGHT:
 					this->addHighlight(pressed);
@@ -124,11 +154,6 @@ class AssettoCorsaCompetizione : public Game {
 				case B_SAVE_REPLAY:
 					this->saveReplay(pressed);
 					break;
-					/*
-				case B_SHIFT:
-					this->held(pressed);
-					break;
-					*/
 				case BANGED + B_CYCLE_LIGHT:
 					this->volumeUp(pressed);
 					break;
@@ -161,7 +186,6 @@ class AssettoCorsaCompetizione : public Game {
 						Serial.print("Unknown button: ");
 						Serial.println(button);
 					}
-					
 					break;
 			}
 		}
@@ -174,8 +198,9 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("startEngine");
 				}
 				*/
-				this->keyTap('e');
+				return this->keyHold('s');
 			}
+			this->keyRelease('s');
 		}
 		void bangedStartEngine(bool pressed) { // BANGED + B_ENGINE
 			if (pressed) {
@@ -184,7 +209,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("bangedStartEngine");
 				}
 				*/
-				this->keyHold('e', 1100);
+				this->keyHold('s', 1100);
 			}
 		}
 		void ignition(bool pressed) { // B_IGNITION
@@ -536,10 +561,7 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('3');
 			}
 		}
-		void engineMap(bool pressed) { // B_ENGINE_MAP
-			this->banged = pressed;
-		}
-		void engineMapUp(bool pressed) { // E_ENGINE_MAP_UP
+		void engineMapUp(bool pressed, char times = 1) { // E_ENGINE_MAP_UP
 			// SHIFT + E
 			/*
 			if (DEBUG) {
@@ -548,15 +570,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_SHIFT);
-				if (this->banged) {
-					this->keyTap('e', 3);
-				} else {
-					this->keyTap('e');
-				}
+				this->keyTap('e', times);
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void engineMapDown(bool pressed) { // E_ENGINE_MAP_DN
+		void engineMapDown(bool pressed, char times = 1) { // E_ENGINE_MAP_DN
 			// CTRL + E
 			/*
 			if (DEBUG) {
@@ -565,18 +583,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap('e', 3);
-				} else {
-					this->keyTap('e');
-				}
+				this->keyTap('e', times);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void brakeBias(bool pressed) { // B_BRAKE_BIAS
-			this->banged = pressed;
-		}
-		void brakeBiasUp(bool pressed) { // E_BRAKE_BIAS_UP
+		void brakeBiasUp(bool pressed, char times = 1) { // E_BRAKE_BIAS_UP
 			// SHIFT + B
 			/*
 			if (DEBUG) {
@@ -585,15 +596,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_SHIFT);
-				if (this->banged) {
-					this->keyTap('b', 10);
-				} else {
-					this->keyTap('b');
-				}
+				this->keyTap('b', times);// 10
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void brakeBiasDown(bool pressed) { // E_BRAKE_BIAS_DN
+		void brakeBiasDown(bool pressed, char times = 1) { // E_BRAKE_BIAS_DN
 			// CTRL + B
 			/*
 			if (DEBUG) {
@@ -602,18 +609,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap('b', 10);
-				} else {
-					this->keyTap('b');
-				}
+				this->keyTap('b', times); // 10
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void antilockBrakingSystem(bool pressed) { // B_ANTILOCK_BRAKING_SYSTEM
-			this->banged = pressed;
-		}
-		void antilockBrakingSystemUp(bool pressed) { // E_ANTILOCK_BRAKING_SYSTEM_UP
+		void antilockBrakingSystemUp(bool pressed, char times = 1) { // E_ANTILOCK_BRAKING_SYSTEM_UP
 			// SHIFT + A
 			/*
 			if (DEBUG) {
@@ -622,15 +622,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_SHIFT);
-				if (this->banged) {
-					this->keyTap('a', 2);
-				} else {
-					this->keyTap('a');
-				}
+				this->keyTap('a', times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void antilockBrakingSystemDown(bool pressed) { // E_ANTILOCK_BRAKING_SYSTEM_DN
+		void antilockBrakingSystemDown(bool pressed, char times = 1) { // E_ANTILOCK_BRAKING_SYSTEM_DN
 			// CTRL + A
 			/*
 			if (DEBUG) {
@@ -639,18 +635,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap('a', 2);
-				} else {
-					this->keyTap('a');
-				}
+				this->keyTap('a', times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void tractionControl(bool pressed) { // B_TRACTION_CONTROL
-			this->banged = pressed;
-		}
-		void tractionControlUp(bool pressed) { // E_TRACTION_CONTROL_UP
+		void tractionControlUp(bool pressed, char times = 1) { // E_TRACTION_CONTROL_UP
 			// SHIFT + T
 			/*
 			if (DEBUG) {
@@ -659,15 +648,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_SHIFT);
-				if (this->banged) {
-					this->keyTap('t', 2);
-				} else {
-					this->keyTap('t');
-				}
+				this->keyTap('t', times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void tractionControlDown(bool pressed) { // E_TRACTION_CONTROL_DN
+		void tractionControlDown(bool pressed, char times = 1) { // E_TRACTION_CONTROL_DN
 			// CTRL + T
 			/*
 			if (DEBUG) {
@@ -676,18 +661,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap('t', 2);
-				} else {
-					this->keyTap('t');
-				}
+				this->keyTap('t', times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void tractionControlCut(bool pressed) { // B_TRACKING_CONTROL_CUT
-			this->banged = pressed;
-		}
-		void tractionControlCutUp(bool pressed) { // E_TRACKING_CONTROL_CUT_UP
+		void tractionControlCutUp(bool pressed, char times = 1) { // E_TRACKING_CONTROL_CUT_UP
 			// SHIFT + Y
 			/*
 			if (DEBUG) {
@@ -696,15 +674,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_SHIFT);
-				if (this->banged) {
-					this->keyTap('y', 2);
-				} else {
-					this->keyTap('y');
-				}
+				this->keyTap('y', times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void tractionControlCutDown(bool pressed) { // E_TRACKING_CONTROL_CUT_DN
+		void tractionControlCutDown(bool pressed, char times = 1) { // E_TRACKING_CONTROL_CUT_DN
 			// CTRL + Y
 			/*
 			if (DEBUG) {
@@ -713,18 +687,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap('y', 2);
-				} else {
-					this->keyTap('y');
-				}
+				this->keyTap('y', times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void special(bool pressed) { // B_SPECIAL
-			this->banged = pressed;
-		}
-		void specialUp(bool pressed) { // E_SPECIAL_UP
+		void specialUp(bool pressed, char times = 1) { // E_SPECIAL_UP
 			// CTRL + Right Arrow
 			/*
 			if (DEBUG) {
@@ -733,15 +700,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap(KEY_RIGHT_ARROW, 5);
-				} else {
-					this->keyTap(KEY_RIGHT_ARROW);
-				}
+				this->keyTap(KEY_RIGHT_ARROW, times); // 5
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void specialDown(bool pressed) { // E_SPECIAL_DN
+		void specialDown(bool pressed, char times = 1) { // E_SPECIAL_DN
 			// CTRL + Left Arrow
 			/*
 			if (DEBUG) {
@@ -750,18 +713,11 @@ class AssettoCorsaCompetizione : public Game {
 			*/
 			if (pressed) {
 				this->keyHold(KEY_LEFT_CTRL);
-				if (this->banged) {
-					this->keyTap(KEY_LEFT_ARROW, 5);
-				} else {
-					this->keyTap(KEY_LEFT_ARROW);
-				}
+				this->keyTap(KEY_LEFT_ARROW, times); // 5
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void volume(bool pressed) { // B_VOLUME
-			this->banged = pressed;
-		}
-		void volumeUp(bool pressed) { // E_VOLUME_UP
+		void volumeUp(bool pressed, char times = 1) { // E_VOLUME_UP
 			// NUM PLUS
 			/*
 			if (DEBUG) {
@@ -769,14 +725,10 @@ class AssettoCorsaCompetizione : public Game {
 			}
 			*/
 			if (pressed) {
-				if (this->banged) {
-					this->keyTap(KEY_KP_PLUS, 10);
-				} else {
-					this->keyTap(KEY_KP_PLUS);
-				}
+				this->keyTap(KEY_KP_PLUS, times); // 10
 			}
 		}
-		void volumeDown(bool pressed) { // E_VOLUME_DN
+		void volumeDown(bool pressed, char times = 1) { // E_VOLUME_DN
 			// NUM MINUS
 			/*
 			if (DEBUG) {
@@ -784,11 +736,7 @@ class AssettoCorsaCompetizione : public Game {
 			}
 			*/
 			if (pressed) {
-				if (this->banged) {
-					this->keyTap(KEY_KP_MINUS, 10);
-				} else {
-					this->keyTap(KEY_KP_MINUS);
-				}
+				this->keyTap(KEY_KP_MINUS, times); // 10
 			}
 		}
 };
