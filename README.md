@@ -35,5 +35,57 @@ Uncomment the ```#include <Game/ButtonsDebug.h>``` in the ```main.cpp``` file to
 
 
 
+### USB Product ID
+_untested_ 
+Edit the Arduino hardware boards.txt file:
+```txt
+---
+leonardo.build.usb_product="Bang Buttons"
+leonardo.build.vid=0x1209
+leonardo.build.pid=0xB501
+leonardo.build.board=AVR_LEONARDO
+leonardo.build.core=arduino
+leonardo.bootloader.low_fuses=0xff
 
 
+bangsystemsbangbuttons.name=Bang Buttons
+bangsystemsbangbuttons.vid.0=0x2341
+bangsystemsbangbuttons.pid.0=0x0036
+bangsystemsbangbuttons.vid.1=0x2341
+bangsystemsbangbuttons.pid.1=0x8036
+bangsystemsbangbuttons.vid.2=0x2A03
+bangsystemsbangbuttons.pid.2=0x0036
+bangsystemsbangbuttons.vid.3=0x2A03
+bangsystemsbangbuttons.pid.3=0x8036
+bangsystemsbangbuttons.vid.4=0x1209
+bangsystemsbangbuttons.pid.4=0xB501
+
+bangsystemsbangbuttons.upload.tool=avrdude
+bangsystemsbangbuttons.upload.protocol=avr109
+bangsystemsbangbuttons.upload.maximum_size=28672
+bangsystemsbangbuttons.upload.maximum_data_size=2560
+bangsystemsbangbuttons.upload.speed=57600
+bangsystemsbangbuttons.upload.disable_flushing=true
+bangsystemsbangbuttons.upload.use_1200bps_touch=true
+bangsystemsbangbuttons.upload.wait_for_upload_port=true
+
+bangsystemsbangbuttons.bootloader.tool=avrdude
+bangsystemsbangbuttons.bootloader.low_fuses=0xff
+bangsystemsbangbuttons.bootloader.high_fuses=0xd8
+bangsystemsbangbuttons.bootloader.extended_fuses=0xcb
+bangsystemsbangbuttons.hex
+bangsystemsbangbuttons.bootloader.unlock_bits=0x3F
+bangsystemsbangbuttons.bootloader.lock_bits=0x2F
+
+bangsystemsbangbuttons.build.mcu=atmega32u4
+bangsystemsbangbuttons.build.f_cpu=16000000L
+bangsystemsbangbuttons.build.vid=0x2341
+bangsystemsbangbuttons.build.pid=0x8036
+bangsystemsbangbuttons.build.usb_product="Bang Buttons"
+bangsystemsbangbuttons.build.board=AVR_LEONARDO
+bangsystemsbangbuttons.build.core=arduino
+bangsystemsbangbuttons.build.variant=leonardo
+bangsystemsbangbuttons.build.extra_flags={build.usb_flags}
+
+bangsystemsbangbuttons.build.usb_product="Bang Buttons"
+```
