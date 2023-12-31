@@ -15,7 +15,7 @@
 #define B_PIN 11
 #define VIBRATE_PIN 12
 
-#define BANGED 36
+#define BANGED 36 // MAX NUMBER OF BUTTONS
 
 #define B_NULL 0
 #define B_ENGINE 1

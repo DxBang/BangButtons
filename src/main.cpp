@@ -9,12 +9,73 @@
 		- Add support for more games
 		- Change the vibration to vibrate on hold instead of press for a duration...
 
+// get your USB Products IDs at pid.codes //
+
+Setup: 
+VID=0x1209
+PID=0xB501
+name=Bang Buttons
+
+
+edit boards.txt:
+---
+leonardo.build.usb_product="Bang Buttons"
+leonardo.build.vid=0x1209
+leonardo.build.pid=0xB501
+leonardo.build.board=AVR_LEONARDO
+leonardo.build.core=arduino
+leonardo.bootloader.low_fuses=0xff
+
+
+bangsystemsbangbuttons.name=Bang Buttons
+bangsystemsbangbuttons.vid.0=0x2341
+bangsystemsbangbuttons.pid.0=0x0036
+bangsystemsbangbuttons.vid.1=0x2341
+bangsystemsbangbuttons.pid.1=0x8036
+bangsystemsbangbuttons.vid.2=0x2A03
+bangsystemsbangbuttons.pid.2=0x0036
+bangsystemsbangbuttons.vid.3=0x2A03
+bangsystemsbangbuttons.pid.3=0x8036
+bangsystemsbangbuttons.vid.4=0x1209
+bangsystemsbangbuttons.pid.4=0xB501
+
+bangsystemsbangbuttons.upload.tool=avrdude
+bangsystemsbangbuttons.upload.protocol=avr109
+bangsystemsbangbuttons.upload.maximum_size=28672
+bangsystemsbangbuttons.upload.maximum_data_size=2560
+bangsystemsbangbuttons.upload.speed=57600
+bangsystemsbangbuttons.upload.disable_flushing=true
+bangsystemsbangbuttons.upload.use_1200bps_touch=true
+bangsystemsbangbuttons.upload.wait_for_upload_port=true
+
+bangsystemsbangbuttons.bootloader.tool=avrdude
+bangsystemsbangbuttons.bootloader.low_fuses=0xff
+bangsystemsbangbuttons.bootloader.high_fuses=0xd8
+bangsystemsbangbuttons.bootloader.extended_fuses=0xcb
+bangsystemsbangbuttons.hex
+bangsystemsbangbuttons.bootloader.unlock_bits=0x3F
+bangsystemsbangbuttons.bootloader.lock_bits=0x2F
+
+bangsystemsbangbuttons.build.mcu=atmega32u4
+bangsystemsbangbuttons.build.f_cpu=16000000L
+bangsystemsbangbuttons.build.vid=0x2341
+bangsystemsbangbuttons.build.pid=0x8036
+bangsystemsbangbuttons.build.usb_product="Bang Buttons"
+bangsystemsbangbuttons.build.board=AVR_LEONARDO
+bangsystemsbangbuttons.build.core=arduino
+bangsystemsbangbuttons.build.variant=leonardo
+bangsystemsbangbuttons.build.extra_flags={build.usb_flags}
+
+bangsystemsbangbuttons.build.usb_product="Bang Buttons"
+
+
+
 */
 
 #include <Arduino.h>
 #include <Keypad.h>
 #include <Keyboard.h>
-// #include <Joystick.h>
+#include <Joystick.h>
 #include <Bang.h>
 // #include <Game/ButtonsDebug.h>
 #include <Game/AssettoCorsaCompetizione.h>
@@ -24,6 +85,9 @@
 #ifndef DEBUG
 	#define DEBUG false
 #endif
+
+#define VID 0x1209
+#define PID 0xB501
 
 // 15 mins
 #define SLEEP_TIME 900000
@@ -107,7 +171,7 @@ unsigned char controllerIndex = 0;
 const unsigned char ROW_NUM = 6;
 const unsigned char COL_NUM = 6;
 
-char keys[ROW_NUM][COL_NUM] = {
+char buttonsGrid[ROW_NUM][COL_NUM] = {
 	{B_ENGINE, B_BB_UP, B_RAINLIGHT, B_CYCLE_LIGHT, B_FLASH, B_INDICATOR_LEFT},
 	{B_IGNITION, B_BANG, B_WIPER, B_ABS_DOWN, B_CAM_CHASE, B_CAM_COCKPIT},
 	{B_PIT_LIMITER, B_TC_UP, B_INDICATOR_RIGHT, B_BB_DOWN, B_CYCLE_CAMERA, B_CAM_BONNET},
@@ -124,27 +188,23 @@ unsigned char colPins[COL_NUM] = {A0, A1, A2, A3, A4, A5};
 // bool buttonStates[BANGED];
 
 Keypad buttons = Keypad(
-	makeKeymap(keys),
+	makeKeymap(buttonsGrid),
 	rowPins,
 	colPins,
 	ROW_NUM,
 	COL_NUM
 );
 
-void setRGB(unsigned char r, unsigned char g, unsigned char b) {
-	analogWrite(R_PIN, r);
-	analogWrite(G_PIN, g);
-	analogWrite(B_PIN, b);
-}
-void setRGB(RGB rgb) {
-	setRGB(rgb.r, rgb.g, rgb.b);
-}
-/*
-void setHSL(int h, float s, float l) {
-	Color color = Color(h, s, l);
-	setRGB(color.getRGB());
-}
-*/
+// setup the joystick
+Joystick_ joystick(
+	JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_JOYSTICK,
+	BANGED * 2, 0, // button count, hat switch count
+	false, false, false, // x, y, z
+	false, false, false, // rx, ry, rz
+	false, false, // rudder, throttle
+	false, false, false // accelerator, brake, steering
+);
+
 
 Controller controllers[] = {
 	/*
@@ -173,6 +233,14 @@ Controller controllers[] = {
 		new Color(180, 1.0, 0.5),
 		0.55
 	),
+	Controller(
+		"Joystick",
+		new GameJoystick(&joystick),
+		new Color(240, 1.0, 0.5),
+		new Color(240, 1.0, 0.75),
+		new Color(180, 1.0, 0.5),
+		0.5
+	)
 };
 unsigned int controllerCount = sizeof(controllers) / sizeof(controllers[0]);
 
@@ -208,6 +276,22 @@ void setController(unsigned char index) {
 	controllerReady = false;
 	controllerChangeTimer = timer;
 }
+
+void setRGB(unsigned char r, unsigned char g, unsigned char b) {
+	analogWrite(R_PIN, r);
+	analogWrite(G_PIN, g);
+	analogWrite(B_PIN, b);
+}
+void setRGB(RGB rgb) {
+	setRGB(rgb.r, rgb.g, rgb.b);
+}
+
+/*
+void setHSL(int h, float s, float l) {
+	Color color = Color(h, s, l);
+	setRGB(color.getRGB());
+}
+*/
 
 void feedbackVibrate(bool toggle) {
 	// return;
@@ -365,12 +449,18 @@ void buttonEventState(Key button) {
 		if (controller.isBanged()) {
 			modeFeedback();
 			controller.button((button.kchar + BANGED), pressed);
-			controller.debang();
+			// controller.debang();
 			bangTimer = 0;
 			return;
 		}
 		modeFeedback();
 		controller.button(button.kchar, pressed);
+		return;
+	}
+	if (controller.isBanged()) {
+		controller.button((button.kchar + BANGED), pressed);
+		controller.debang();
+		pressCount--;
 		return;
 	}
 	pressCount--;
@@ -445,7 +535,6 @@ void setup() {
 	bootAnimation();
 	// buttons.setHoldTime(500);
 	buttons.setDebounceTime(200);
-	// buttons.addEventListener(buttonEvent);
 	setController(controllerIndex);
 	stayAwake();
 }
