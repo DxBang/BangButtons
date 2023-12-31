@@ -9,7 +9,7 @@ class AssettoCorsaCompetizione : public Game {
 			isKeyboard = true;
 		}
 		void button(unsigned char button, bool pressed) override {
-			if (Serial) {
+			if (DEBUG) {
 				Serial.print("AssettoCorsaCompetizione: ");
 				Serial.print(button);
 				Serial.print(" ");
@@ -18,6 +18,9 @@ class AssettoCorsaCompetizione : public Game {
 			switch (button) {
 				case B_ENGINE:
 					this->startEngine(pressed);
+					break;
+				case BANGED + B_ENGINE:
+					this->bangedStartEngine(pressed);
 					break;
 				case B_IGNITION:
 					this->ignition(pressed);
@@ -55,16 +58,16 @@ class AssettoCorsaCompetizione : public Game {
 				case B_INDICATOR_RIGHT:
 					this->indicatorRight(pressed);
 					break;
-				case SHIFTED + B_TIME_TABLE:
+				case BANGED + B_TIME_TABLE:
 					this->names(pressed);
 					break;
-				case SHIFTED + B_MFD_PITSTOP:
+				case BANGED + B_MFD_PITSTOP:
 					this->raceLogic(pressed);
 					break;
-				case SHIFTED + B_MFD_STANDINGS:
+				case BANGED + B_MFD_STANDINGS:
 					this->dashboardUp(pressed);
 					break;
-				case SHIFTED + B_MFD_POSITIONS:
+				case BANGED + B_MFD_POSITIONS:
 					this->dashboardDown(pressed);
 					break;
 				case B_NAV_UP:
@@ -82,7 +85,7 @@ class AssettoCorsaCompetizione : public Game {
 				case B_NAV_SELECT:
 					this->select(pressed);
 					break;
-				case SHIFTED + B_MFD_ELECTRONICS:
+				case BANGED + B_MFD_ELECTRONICS:
 					this->cycleMFD(pressed);
 					break;
 				case B_BB_UP:
@@ -121,13 +124,15 @@ class AssettoCorsaCompetizione : public Game {
 				case B_SAVE_REPLAY:
 					this->saveReplay(pressed);
 					break;
+					/*
 				case B_SHIFT:
 					this->held(pressed);
 					break;
-				case SHIFTED + B_CYCLE_LIGHT:
+					*/
+				case BANGED + B_CYCLE_LIGHT:
 					this->volumeUp(pressed);
 					break;
-				case SHIFTED + B_FLASH:
+				case BANGED + B_FLASH:
 					this->volumeDown(pressed);
 					break;
 				case B_MFD_PITSTOP:
@@ -145,529 +150,645 @@ class AssettoCorsaCompetizione : public Game {
 				case B_TIME_TABLE:
 					this->timeTable(pressed);
 					break;
-				case SHIFTED + B_WIPER:
+				case BANGED + B_WIPER:
 					this->cycleHUD(pressed);
 					break;
-				case SHIFTED + B_RAINLIGHT:
+				case BANGED + B_RAINLIGHT:
 					this->cycleMap(pressed);
 					break;
 				default:
-					if (Serial) {
+					if (DEBUG) {
 						Serial.print("Unknown button: ");
 						Serial.println(button);
 					}
+					
 					break;
 			}
 		}
 
 	private:
-		void held(bool pressed) { // B_SHIFT
-			if (pressed) {
-				if (Serial) {
-					Serial.println("shift");
-				}
-				this->heldEncoder = true;
-			} else {
-				this->heldEncoder = false;
-			}
-		}
 		void startEngine(bool pressed) { // B_ENGINE
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("startEngine");
 				}
-				this->hold('e');
-			} else {
-				this->release('e');
+				*/
+				this->keyTap('e');
+			}
+		}
+		void bangedStartEngine(bool pressed) { // BANGED + B_ENGINE
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("bangedStartEngine");
+				}
+				*/
+				this->keyHold('e', 1100);
 			}
 		}
 		void ignition(bool pressed) { // B_IGNITION
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("ignition");
 				}
-				this->hold(KEY_LEFT_SHIFT);
-				this->hold('i');
-			} else {
-				this->release('i');
-				this->release(KEY_LEFT_SHIFT);
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap('i');
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
 		void pitLimiter(bool pressed) { // B_PIT_LIMITER
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("pitLimiter");
 				}
-				this->hold(KEY_LEFT_ALT);
-				this->hold('l');
-			} else {
-				this->release('l');
-				this->release(KEY_LEFT_ALT);
+				*/
+				this->keyHold(KEY_LEFT_ALT);
+				this->keyTap('l');
+				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
 		void cycleLights(bool pressed) { // B_CYCLE_LIGHTS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cycleLights");
 				}
-				this->tap('l');
+				*/
+				this->keyTap('l');
 			}
 		}
 		void flash(bool pressed) { // B_FLASH
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("flash");
 				}
-				this->hold(KEY_LEFT_SHIFT);
-				this->tap('l');
-				this->release(KEY_LEFT_SHIFT);
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap('l');
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
 		void rainLights(bool pressed) { // B_RAINLIGHTS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("rainLights");
 				}
-
-				this->hold(KEY_LEFT_CTRL);
-				this->tap('l');
-				this->release(KEY_LEFT_CTRL);
+				*/
+				this->keyHold(KEY_LEFT_CTRL);
+				this->keyTap('l');
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
 		void indicatorLeft(bool pressed) { // B_INDICATOR_LEFT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("indicatorLeft");
 				}
-				this->hold(KEY_LEFT_ALT);
-				this->tap(KEY_LEFT_ARROW);
-				this->release(KEY_LEFT_ALT);
+				*/
+				this->keyHold(KEY_LEFT_ALT);
+				this->keyTap(KEY_LEFT_ARROW);
+				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
 		void indicatorRight(bool pressed) { // B_INDICATOR_RIGHT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("B_INDICATOR_RIGHT");
 				}
-				this->hold(KEY_LEFT_ALT);
-				this->tap(KEY_RIGHT_ARROW);
-				this->release(KEY_LEFT_ALT);
+				*/
+				this->keyHold(KEY_LEFT_ALT);
+				this->keyTap(KEY_RIGHT_ARROW);
+				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
 		void cycleWiper(bool pressed) { // B_CYCLE_WIPERS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cycleWiper");
 				}
-				this->hold(KEY_LEFT_ALT);
-				this->tap('w');
-				this->release(KEY_LEFT_ALT);
+				*/
+				this->keyHold(KEY_LEFT_ALT);
+				this->keyTap('w');
+				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
 		void names(bool pressed) { // B_NAMES
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("names");
 				}
-				this->tap('v');
+				*/
+				this->keyTap('v');
 			}
 		}
 		void cycleMFD(bool pressed) { // B_BACK
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cycleMFD");
 				}
-				this->tap(KEY_INSERT);
+				*/
+				this->keyTap(KEY_INSERT);
 			}
 		}
 		void cycleHUD(bool pressed) { // B_CYCLE_HUD
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cycleHUD");
 				}
-				this->tap(KEY_F2);
+				*/
+				this->keyTap(KEY_F2);
 			}
 		}
 		void cycleMap(bool pressed) { // B_CYCLE_MAP
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cycleMap");
 				}
-				this->hold(KEY_LEFT_SHIFT);
-				this->tap('m');
-				this->release(KEY_LEFT_SHIFT);	
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap('m');
+				this->keyRelease(KEY_LEFT_SHIFT);	
 			}
 		}
 		void navigationUp(bool pressed) { // B_NAVIGATION_UP
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("navigationUp");
 				}
-				this->tap(KEY_UP_ARROW);
+				*/
+				this->keyTap(KEY_UP_ARROW);
 			}
 		}
 		void navigationDown(bool pressed) { // B_NAVIGATION_DOWN
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("navigationDown");
 				}
-				this->tap(KEY_DOWN_ARROW);
+				*/
+				this->keyTap(KEY_DOWN_ARROW);
 			}
 		}
 		void navigationLeft(bool pressed) { // B_NAVIGATION_LEFT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("navigationLeft");
 				}
-				this->tap(KEY_LEFT_ARROW);
+				*/
+				this->keyTap(KEY_LEFT_ARROW);
 			}
 		}
 		void navigationRight(bool pressed) { // B_NAVIGATION_RIGHT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("navigationRight");
 				}
-				this->tap(KEY_RIGHT_ARROW);
+				*/
+				this->keyTap(KEY_RIGHT_ARROW);
 			}
 		}
 		void select(bool pressed) { // B_SELECT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("select");
 				}
-				this->tap(KEY_RETURN);
+				*/
+				this->keyTap(KEY_RETURN);
 			}
 		}
 		void raceLogic(bool pressed) { // B_RACELOGIC
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("raceLogic");
 				}
-				this->hold(KEY_LEFT_ALT);
-				this->tap('d');
-				this->release(KEY_LEFT_ALT);
+				*/
+				this->keyHold(KEY_LEFT_ALT);
+				this->keyTap('d');
+				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
 		void dashboardUp(bool pressed) { // B_DASHBOARD_UP
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("dashboardUp");
 				}
-				this->hold(KEY_LEFT_SHIFT);
-				this->tap('d');
-				this->release(KEY_LEFT_SHIFT);
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap('d');
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
 		void dashboardDown(bool pressed) { // B_DASHBOARD_DOWN
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("dashboardDown");
 				}
-				this->hold(KEY_LEFT_CTRL);
-				this->tap('d');
-				this->release(KEY_LEFT_CTRL);
+				*/
+				this->keyHold(KEY_LEFT_CTRL);
+				this->keyTap('d');
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
 		void timeTable(bool pressed) { // B_RACELOGIC
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("timeTable");
 				}
-				this->hold(KEY_TAB);
+				*/
+				this->keyHold(KEY_TAB);
 			}
 			else {
-				this->release(KEY_TAB);
+				this->keyRelease(KEY_TAB);
 			}
 		}
 		void mfdElectronics(bool pressed) { // B_MFD_ELECTRONICS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("mfdElectronics");
 				}
-				this->tap('o');
+				*/
+				this->keyTap('o');
 			}
 		}
 		void mfdPitstop(bool pressed) { // B_MFD_PIT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("mfdPitstop");
 				}
-				this->tap('p');
+				*/
+				this->keyTap('p');
 			}
 		}
 		void mfdStandings(bool pressed) { // B_MFD_STANDINGS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("mfdStandings");
 				}
-				this->tap('i');
+				*/
+				this->keyTap('i');
 			}
 		}
 		void mfdPositions(bool pressed) { // B_MFD_POSITIONS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("mfdPositions");
 				}
-				this->tap('u');
+				*/
+				this->keyTap('u');
 			}
 		}
 		void saveReplay(bool pressed) { // B_SAVE_REPLAY
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("saveReplay");
 				}
-				this->tap('m');
+				*/
+				this->keyTap('m');
 			}
 		}
 		void addHighlight(bool pressed) { // B_ADD_HIGHLIGHT
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("addHighlight");
 				}
-				this->hold(KEY_LEFT_ALT);
-				this->tap('m');
-				this->release(KEY_LEFT_ALT);
+				*/
+				this->keyHold(KEY_LEFT_ALT);
+				this->keyTap('m');
+				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
 		void saveHighlights(bool pressed) { // B_SAVE_HIGHLIGHTS
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("saveHighlights");
 				}
-				this->hold(KEY_LEFT_CTRL);
-				this->tap('m');
-				this->release(KEY_LEFT_CTRL);
+				*/
+				this->keyHold(KEY_LEFT_CTRL);
+				this->keyTap('m');
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
 		void cycleCamera(bool pressed) { // B_CYCLE_CAMERA
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cycleCamera");
 				}
-				this->tap(KEY_F1);
+				*/
+				this->keyTap(KEY_F1);
 			}
 		}
 		void cockpit(bool pressed) { // B_COCKPIT_CAM
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("cockpit");
 				}
-				this->tap('1');
+				*/
+				this->keyTap('1');
 			}
 		}
 		void bonnet(bool pressed) { // B_BONNET_CAM
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("bonnet");
 				}
-				this->tap('2');
+				*/
+				this->keyTap('2');
 			}
 		}
 		void chase(bool pressed) { // B_CHASE_CAM
 			if (pressed) {
-				if (Serial) {
+				/*
+				if (DEBUG) {
 					Serial.println("chase");
 				}
-				this->tap('3');
+				*/
+				this->keyTap('3');
 			}
 		}
 		void engineMap(bool pressed) { // B_ENGINE_MAP
-			this->heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void engineMapUp(bool pressed) { // E_ENGINE_MAP_UP
 			// SHIFT + E
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("engineMapUp: SHIFT + E");
 			}
-			this->hold(KEY_LEFT_SHIFT);
-			if (this->heldEncoder) {
-				this->tap('e', 2);
-			} else {
-				this->tap('e');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_SHIFT);
+				if (this->banged) {
+					this->keyTap('e', 3);
+				} else {
+					this->keyTap('e');
+				}
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
-			this->release(KEY_LEFT_SHIFT);
 		}
 		void engineMapDown(bool pressed) { // E_ENGINE_MAP_DN
 			// CTRL + E
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("engineMapDown: CTRL + E");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap('e', 2);
-			} else {
-				this->tap('e');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap('e', 3);
+				} else {
+					this->keyTap('e');
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void brakeBias(bool pressed) { // B_BRAKE_BIAS
-			heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void brakeBiasUp(bool pressed) { // E_BRAKE_BIAS_UP
 			// SHIFT + B
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("brakeBiasUp: SHIFT + B");
 			}
-			this->hold(KEY_LEFT_SHIFT);
-			if (heldEncoder) {
-				this->tap('b', 10);
-			} else {
-				this->tap('b');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_SHIFT);
+				if (this->banged) {
+					this->keyTap('b', 10);
+				} else {
+					this->keyTap('b');
+				}
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
-			this->release(KEY_LEFT_SHIFT);
 		}
 		void brakeBiasDown(bool pressed) { // E_BRAKE_BIAS_DN
 			// CTRL + B
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("brakeBiasDown: CTRL + B");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap('b', 10);
-			} else {
-				this->tap('b');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap('b', 10);
+				} else {
+					this->keyTap('b');
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void antilockBrakingSystem(bool pressed) { // B_ANTILOCK_BRAKING_SYSTEM
-			heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void antilockBrakingSystemUp(bool pressed) { // E_ANTILOCK_BRAKING_SYSTEM_UP
 			// SHIFT + A
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("antilockBrakingSystemUp: SHIFT + A");
 			}
-			this->hold(KEY_LEFT_SHIFT);
-			if (heldEncoder) {
-				this->tap('a', 2);
-			} else {
-				this->tap('a');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_SHIFT);
+				if (this->banged) {
+					this->keyTap('a', 2);
+				} else {
+					this->keyTap('a');
+				}
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
-			this->release(KEY_LEFT_SHIFT);
 		}
 		void antilockBrakingSystemDown(bool pressed) { // E_ANTILOCK_BRAKING_SYSTEM_DN
 			// CTRL + A
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("antilockBrakingSystemDown: CTRL + A");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap('a', 2);
-			} else {
-				this->tap('a');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap('a', 2);
+				} else {
+					this->keyTap('a');
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void tractionControl(bool pressed) { // B_TRACTION_CONTROL
-			heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void tractionControlUp(bool pressed) { // E_TRACTION_CONTROL_UP
 			// SHIFT + T
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("tractionControlUp: SHIFT + T");
 			}
-			this->hold(KEY_LEFT_SHIFT);
-			if (heldEncoder) {
-				this->tap('t', 2);
-			} else {
-				this->tap('t');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_SHIFT);
+				if (this->banged) {
+					this->keyTap('t', 2);
+				} else {
+					this->keyTap('t');
+				}
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
-			this->release(KEY_LEFT_SHIFT);
 		}
 		void tractionControlDown(bool pressed) { // E_TRACTION_CONTROL_DN
 			// CTRL + T
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("tractionControlDown: CTRL + T");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap('t', 2);
-			} else {
-				this->tap('t');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap('t', 2);
+				} else {
+					this->keyTap('t');
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void tractionControlCut(bool pressed) { // B_TRACKING_CONTROL_CUT
-			heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void tractionControlCutUp(bool pressed) { // E_TRACKING_CONTROL_CUT_UP
 			// SHIFT + Y
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("tractionControlCutUp: SHIFT + Y");
 			}
-			this->hold(KEY_LEFT_SHIFT);
-			if (heldEncoder) {
-				this->tap('y', 2);
-			} else {
-				this->tap('y');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_SHIFT);
+				if (this->banged) {
+					this->keyTap('y', 2);
+				} else {
+					this->keyTap('y');
+				}
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
-			this->release(KEY_LEFT_SHIFT);
 		}
 		void tractionControlCutDown(bool pressed) { // E_TRACKING_CONTROL_CUT_DN
 			// CTRL + Y
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("tractionControlCutDown: CTRL + Y");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap('y', 2);
-			} else {
-				this->tap('y');
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap('y', 2);
+				} else {
+					this->keyTap('y');
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void special(bool pressed) { // B_SPECIAL
-			heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void specialUp(bool pressed) { // E_SPECIAL_UP
 			// CTRL + Right Arrow
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("specialUp: CTRL + Right Arrow");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap(KEY_RIGHT_ARROW, 5);
-			} else {
-				this->tap(KEY_RIGHT_ARROW);
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap(KEY_RIGHT_ARROW, 5);
+				} else {
+					this->keyTap(KEY_RIGHT_ARROW);
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void specialDown(bool pressed) { // E_SPECIAL_DN
 			// CTRL + Left Arrow
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("specialDown: CTRL + Left Arrow");
 			}
-			this->hold(KEY_LEFT_CTRL);
-			if (heldEncoder) {
-				this->tap(KEY_LEFT_ARROW, 5);
-			} else {
-				this->tap(KEY_LEFT_ARROW);
+			*/
+			if (pressed) {
+				this->keyHold(KEY_LEFT_CTRL);
+				if (this->banged) {
+					this->keyTap(KEY_LEFT_ARROW, 5);
+				} else {
+					this->keyTap(KEY_LEFT_ARROW);
+				}
+				this->keyRelease(KEY_LEFT_CTRL);
 			}
-			this->release(KEY_LEFT_CTRL);
 		}
 		void volume(bool pressed) { // B_VOLUME
-			heldEncoder = pressed;
+			this->banged = pressed;
 		}
 		void volumeUp(bool pressed) { // E_VOLUME_UP
 			// NUM PLUS
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("volumeUp: NUM PLUS");
 			}
-			if (heldEncoder) {
-				this->tap(KEY_KP_PLUS, 10);
-			} else {
-				this->tap(KEY_KP_PLUS);
+			*/
+			if (pressed) {
+				if (this->banged) {
+					this->keyTap(KEY_KP_PLUS, 10);
+				} else {
+					this->keyTap(KEY_KP_PLUS);
+				}
 			}
 		}
 		void volumeDown(bool pressed) { // E_VOLUME_DN
 			// NUM MINUS
-			if (Serial) {
+			/*
+			if (DEBUG) {
 				Serial.println("volumeDown: NUM MINUS");
 			}
-			if (heldEncoder) {
-				this->tap(KEY_KP_MINUS, 10);
-			} else {
-				this->tap(KEY_KP_MINUS);
+			*/
+			if (pressed) {
+				if (this->banged) {
+					this->keyTap(KEY_KP_MINUS, 10);
+				} else {
+					this->keyTap(KEY_KP_MINUS);
+				}
 			}
 		}
 };

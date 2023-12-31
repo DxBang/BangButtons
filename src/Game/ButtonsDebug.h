@@ -9,235 +9,243 @@ class ButtonsDebug : public Game {
 			isKeyboard = true;
 		}
 		void button(unsigned char button, bool pressed) override {
-			if (!pressed) {
-				return;
-			}
 			if (!Serial) {
 				return;
 			}
 			switch (button) {
 				case B_NULL:
 					if (Serial) {
-						Serial.println("B_NULL");
+						Serial.print("B_NULL: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_NULL");
 					break;
 				case B_ENGINE:
 					if (Serial) {
-						Serial.println("B_ENGINE");
+						Serial.print("B_ENGINE: ");
+						Serial.println(pressed);
+						this->engine(pressed);
 					}
-					Keyboard.println("B_ENGINE");
 					break;
 				case B_IGNITION:
 					if (Serial) {
-						Serial.println("B_IGNITION");
+						Serial.print("B_IGNITION: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_IGNITION");
 					break;
 				case B_PIT_LIMITER:
 					if (Serial) {
-						Serial.println("B_PIT_LIMITER");
+						Serial.print("B_PIT_LIMITER: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_PIT_LIMITER");
 					break;
 				case B_CYCLE_LIGHT:
 					if (Serial) {
-						Serial.println("B_CYCLE_LIGHT");
+						Serial.print("B_CYCLE_LIGHT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_CYCLE_LIGHT");
 					break;
 				case B_FLASH:
 					if (Serial) {
-						Serial.println("B_FLASH");
+						Serial.print("B_FLASH: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_FLASH");
 					break;
 				case B_RAINLIGHT:
 					if (Serial) {
-						Serial.println("B_RAINLIGHT");
+						Serial.print("B_RAINLIGHT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_RAINLIGHT");
 					break;
 				case B_WIPER:
 					if (Serial) {
-						Serial.println("B_WIPER");
+						Serial.print("B_WIPER: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_WIPER");
 					break;
 				case B_CAM_BONNET:
 					if (Serial) {
-						Serial.println("B_CAM_BONNET");
+						Serial.print("B_CAM_BONNET: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_CAM_BONNET");
 					break;
 				case B_CAM_COCKPIT:
 					if (Serial) {
-						Serial.println("B_CAM_COCKPIT");
+						Serial.print("B_CAM_COCKPIT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_CAM_COCKPIT");
 					break;
 				case B_CAM_CHASE:
 					if (Serial) {
-						Serial.println("B_CAM_CHASE");
+						Serial.print("B_CAM_CHASE: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_CAM_CHASE");
 					break;
 				case B_CYCLE_CAMERA:
 					if (Serial) {
-						Serial.println("B_CYCLE_CAMERA");
+						Serial.print("B_CYCLE_CAMERA: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_CYCLE_CAMERA");
 					break;
 				case B_INDICATOR_LEFT:
 					if (Serial) {
-						Serial.println("B_INDICATOR_LEFT");
+						Serial.print("B_INDICATOR_LEFT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_INDICATOR_LEFT");
 					break;
 				case B_INDICATOR_RIGHT:
 					if (Serial) {
-						Serial.println("B_INDICATOR_RIGHT");
+						Serial.print("B_INDICATOR_RIGHT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_INDICATOR_RIGHT");
 					break;
 				case B_TIME_TABLE:
 					if (Serial) {
-						Serial.println("B_TIME_TABLE");
+						Serial.print("B_TIME_TABLE: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_TIME_TABLE");
 					break;
 				case B_MFD_PITSTOP:
 					if (Serial) {
-						Serial.println("B_MFD_PITSTOP");
+						Serial.print("B_MFD_PITSTOP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_MFD_PITSTOP");
 					break;
 				case B_MFD_STANDINGS:
 					if (Serial) {
-						Serial.println("B_MFD_STANDINGS");
+						Serial.print("B_MFD_STANDINGS: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_MFD_STANDINGS");
 					break;
 				case B_MFD_POSITIONS:
 					if (Serial) {
-						Serial.println("B_MFD_POSITIONS");
+						Serial.print("B_MFD_POSITIONS: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_MFD_POSITIONS");
 					break;
 				case B_NAV_UP:
 					if (Serial) {
-						Serial.println("B_NAV_UP");
+						Serial.print("B_NAV_UP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_NAV_UP");
 					break;
 				case B_NAV_DOWN:
 					if (Serial) {
-						Serial.println("B_NAV_DOWN");
+						Serial.print("B_NAV_DOWN: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_NAV_DOWN");
 					break;
 				case B_NAV_LEFT:
 					if (Serial) {
-						Serial.println("B_NAV_LEFT");
+						Serial.print("B_NAV_LEFT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_NAV_LEFT");
 					break;
 				case B_NAV_RIGHT:
 					if (Serial) {
-						Serial.println("B_NAV_RIGHT");
+						Serial.print("B_NAV_RIGHT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_NAV_RIGHT");
 					break;
 				case B_NAV_SELECT:
 					if (Serial) {
-						Serial.println("B_NAV_SELECT");
+						Serial.print("B_NAV_SELECT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_NAV_SELECT");
 					break;
 				case B_MFD_ELECTRONICS:
 					if (Serial) {
-						Serial.println("B_MFD_ELECTRONICS");
+						Serial.print("B_MFD_ELECTRONICS: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_MFD_ELECTRONICS");
 					break;
 				case B_BB_UP:
 					if (Serial) {
-						Serial.println("B_BB_UP");
+						Serial.print("B_BB_UP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_BB_UP");
 					break;
 				case B_BB_DOWN:
 					if (Serial) {
-						Serial.println("B_BB_DOWN");
+						Serial.print("B_BB_DOWN: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_BB_DOWN");
 					break;
 				case B_TC_UP:
 					if (Serial) {
-						Serial.println("B_TC_UP");
+						Serial.print("B_TC_UP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_TC_UP");
 					break;
 				case B_TC_DOWN:
 					if (Serial) {
-						Serial.println("B_TC_DOWN");
+						Serial.print("B_TC_DOWN: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_TC_DOWN");
 					break;
 				case B_ABS_UP:
 					if (Serial) {
-						Serial.println("B_ABS_UP");
+						Serial.print("B_ABS_UP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_ABS_UP");
 					break;
 				case B_ABS_DOWN:
 					if (Serial) {
-						Serial.println("B_ABS_DOWN");
+						Serial.print("B_ABS_DOWN: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_ABS_DOWN");
 					break;
 				case B_TCC_UP:
 					if (Serial) {
-						Serial.println("B_TCC_UP");
+						Serial.print("B_TCC_UP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_TCC_UP");
 					break;
 				case B_TCC_DOWN:
 					if (Serial) {
-						Serial.println("B_TCC_DOWN");
+						Serial.print("B_TCC_DOWN: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_TCC_DOWN");
 					break;
 				case B_EM_UP:
 					if (Serial) {
-						Serial.println("B_EM_UP");
+						Serial.print("B_EM_UP: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_EM_UP");
 					break;
 				case B_EM_DOWN:
 					if (Serial) {
-						Serial.println("B_EM_DOWN");
+						Serial.print("B_EM_DOWN: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_EM_DOWN");
 					break;
 				case B_ADD_HIGHLIGHT:
 					if (Serial) {
-						Serial.println("B_ADD_HIGHLIGHT");
+						Serial.print("B_ADD_HIGHLIGHT: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_ADD_HIGHLIGHT");
 					break;
 				case B_SAVE_REPLAY:
 					if (Serial) {
-						Serial.println("B_SAVE_REPLAY");
+						Serial.print("B_SAVE_REPLAY: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_SAVE_REPLAY");
 					break;
-				case B_SHIFT:
+				case B_BANG:
 					if (Serial) {
-						Serial.println("B_SHIFT");
+						Serial.print("B_BANG: ");
+						Serial.println(pressed);
 					}
-					Keyboard.println("B_SHIFT");
 					break;
 			}
 		}
+		private:
+			void engine(bool pressed) {
+				Serial.print("pressed: ");
+				Serial.print(pressed);
+				if (pressed) {
+					Serial.println("engine pressed");
+					return;
+				}
+				Serial.println("engine released");
+			}
 };

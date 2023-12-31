@@ -8,14 +8,14 @@
 	#include <Keyboard.h>
 #endif
 
+#define DEBUG false
+
 #define R_PIN 9
 #define G_PIN 10
 #define B_PIN 11
-
 #define VIBRATE_PIN 12
 
-
-#define SHIFTED 34
+#define BANGED 36
 
 #define B_NULL 0
 #define B_ENGINE 1
@@ -53,7 +53,7 @@
 #define B_EM_DOWN 33
 #define B_ADD_HIGHLIGHT 34
 #define B_SAVE_REPLAY 35
-#define B_SHIFT 36
+#define B_BANG 36
 
 struct RGB {
 	unsigned char r;
@@ -62,14 +62,14 @@ struct RGB {
 };
 
 struct HSL {
-	int h;
+	unsigned int h;
 	float s;
 	float l;
 };
 
 class Color {
 	private:
-		int hue;
+		unsigned int hue;
 		float saturation;
 		float lightness;
 
@@ -99,7 +99,6 @@ class Color {
 		float getLightness() {
 			return lightness;
 		}
-
 		HSL getHSL() {
 			HSL hsl;
 			hsl.h = hue;
@@ -107,7 +106,6 @@ class Color {
 			hsl.l = lightness;
 			return hsl;
 		}
-
 		RGB getRGB() {
 			RGB rgb;
 			float c = (1 - abs(2 * lightness - 1)) * saturation;
@@ -153,7 +151,7 @@ class Game {
 		bool heldEncoder = false;
 		bool isKeyboard = false;
 		bool isJoystick = false;
-		bool shift = false;
+		bool banged = false;
 		int miniDelay = 5;
 		int shortDelay = 10;
 		int mediumDelay = 50;
@@ -162,21 +160,30 @@ class Game {
 		int longestDelay = 500;
 		int tapDelay = 50;
 		int recurrenceDelay = 100;
+		// Joystick_ *joystick;
 		Game() {};
-		virtual void button(unsigned char button, bool pressed) {
-			if (!Serial) {
-				return;
-			}
-			if (pressed) {
-				Serial.print("BUTTON PRESSED: ");
-			} else {
-				Serial.print("BUTTON RELEASED: ");
-			}
-			Serial.println(button);
-		};
+		virtual void button(unsigned char button, bool pressed) {};
 		virtual void begin() {};
 		virtual void end() {};
-		void hold(char key, unsigned char miliseconds = 0) {
+		/* keybaord */
+		void keyPress(char key) {
+			/*
+			if (DEBUG) {
+				Serial.print("press: ");
+				Serial.println(key);
+			}
+			*/
+			Keyboard.press(key);
+		}
+		void keyHold(char key, unsigned int miliseconds = 0) {
+			/*
+			if (DEBUG) {
+				Serial.print("KEY HOLD: ");
+				Serial.print(key);
+				Serial.print(" ");
+				Serial.println(miliseconds);
+			}
+			*/
 			if (miliseconds) {
 				Keyboard.press(key);
 				delay(miliseconds);
@@ -186,27 +193,115 @@ class Game {
 				Keyboard.press(key);
 			}
 		}
-		void release(char key) {
-			Keyboard.release(key);
-		}
-		void tap(char key, unsigned char times = 1) {
+		void keyTap(char key, unsigned char times = 1) {
+			/*
+			if (DEBUG) {
+				Serial.print("KEY TAP: ");
+				Serial.print(key);
+				Serial.print(" ");
+				Serial.println(times);
+			}
+			*/
 			for (unsigned char i = 0; i < times; i++) {
 				Keyboard.press(key);
-				delay(tapDelay);
+				delay(this->tapDelay);
 				Keyboard.release(key);
 				// check if last iteration
 				if (i == times - 1) {
 					return;
 				}
-				delay(recurrenceDelay);
+				delay(this->recurrenceDelay);
 			}
 		}
-		void releaseAll() {
+		void keyRelease(char key) {
+			/*
+			if (DEBUG) {
+				Serial.print("KEY RELEASE: ");
+				Serial.println(key);
+			}
+			*/
+			Keyboard.release(key);
+		}
+		void keyReleaseAll() {
+			/*
+			if (DEBUG) {
+				Serial.println("KEY RELEASE ALL");
+			}
+			*/
 			Keyboard.releaseAll();
 		}
-		void push(char key) {
-			Keyboard.press(key);
+		/* joystick */
+		/*
+		void joyPress(unsigned char button) {
+			if (!this->isJoystick) {
+				return;
+			}
+			if (DEBUG) {
+				Serial.print("JOY PRESS: ");
+				Serial.println(button);
+			}
+			this->joystick->pressButton(button);
 		}
+		void joyHold(unsigned char button, unsigned char miliseconds = 0) {
+			if (!this->isJoystick) {
+				return;
+			}
+			if (DEBUG) {
+				Serial.print("JOY HOLD: ");
+				Serial.print(button);
+				Serial.print(" ");
+				Serial.println(miliseconds);
+			}
+			if (miliseconds) {
+				this->joystick->pressButton(button);
+				delay(miliseconds);
+				this->joystick->releaseButton(button);
+			}
+			else {
+				this->joystick->pressButton(button);
+			}
+		}
+		void joyTap(unsigned char button, unsigned char times = 1) {
+			if (!this->isJoystick) {
+				return;
+			}
+			if (DEBUG) {
+				Serial.print("JOY TAP: ");
+				Serial.print(button);
+				Serial.print(" ");
+				Serial.println(times);
+			}
+			for (unsigned char i = 0; i < times; i++) {
+				this->joystick->pressButton(button);
+				delay(this->tapDelay);
+				this->joystick->releaseButton(button);
+				// check if last iteration
+				if (i == times - 1) {
+					return;
+				}
+				delay(this->recurrenceDelay);
+			}
+		}
+		void joyRelease(unsigned char button) {
+			if (!this->isJoystick) {
+				return;
+			}
+			if (DEBUG) {
+				Serial.print("JOY RELEASE: ");
+				Serial.println(button);
+			}
+			this->joystick->releaseButton(button);
+		}
+		void joyReleaseAll() {
+			if (!this->isJoystick) {
+				return;
+			}
+			for(unsigned char i = 0; i < 64; i++) {
+				this->joystick->releaseButton(i);
+			}
+		}
+		*/
+
 };
 
 class Controller {
@@ -214,31 +309,33 @@ class Controller {
 		const char* name;
 		Game* game;
 		Color* color;
-		Color* colorPressed;
-		Color* colorShifted;
+		Color* colorFeedback;
+		Color* colorBanged;
 		float intensity;
 		Controller(
 			const char* name,
 			Game* game,
 			Color* color,
-			Color* colorPressed,
-			Color* colorShifted,
+			Color* colorFeedback,
+			Color* colorBanged,
 			float intensity = 0.5
 		) {
 			this->name = name;
 			this->game = game;
 			this->color = color;
-			this->colorPressed = colorPressed;
-			this->colorShifted = colorShifted;
+			this->colorFeedback = colorFeedback;
+			this->colorBanged = colorBanged;
 			this->intensity = intensity;
 		};
 		void button(unsigned char button, bool pressed) {
 			this->game->button(button, pressed);
 		};
 		void end() {
+			// this->debang();
 			this->game->end();
 		};
 		void begin() {
+			// this->debang();
 			this->game->begin();
 		};
 		float getIntensity() {
@@ -247,13 +344,13 @@ class Controller {
 		void setIntensity(float intensity) {
 			this->intensity = intensity;
 		};
-		void shift() {
-			this->game->shift = true;
+		void bang() {
+			this->game->banged = true;
 		};
-		void unshift() {
-			this->game->shift = false;
+		void debang() {
+			this->game->banged = false;
 		};
-		bool isShifted() {
-			return this->game->shift;
+		bool isBanged() {
+			return this->game->banged;
 		};
 };

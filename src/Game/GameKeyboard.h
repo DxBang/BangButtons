@@ -10,5 +10,8 @@ class GameKeyboard : public Game {
 	public:
 		GameKeyboard() {
 			isKeyboard = true;
+			if (DEBUG) {
+				Serial.println("GameKeyboard");
+			}
 		};
 };
