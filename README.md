@@ -3,7 +3,7 @@
 [Layout Preview](https://bang.systems/project/buttonbox#bangbuttons).
 
 
-_Tips_ 
+_Tips_  
 [Get your USB Products IDs at pid.codes](https://pid.codes).
 
 
@@ -36,7 +36,7 @@ Uncomment the ```#include <Game/ButtonsDebug.h>``` in the ```main.cpp``` file to
 
 
 ### USB Product ID
-_untested_ 
+_untested_  
 Edit the Arduino hardware boards.txt file:
 ```txt
 ---
