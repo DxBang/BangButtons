@@ -1,17 +1,19 @@
 # Bang Buttons
 
-[Layout Preview](https://bang.systems/project/buttonbox#bangbuttons).
+A Sim Racing Button Box with support for 6x6 buttons with 1 button working as a "shifted" button called BANG. The BANG button is primarily used to switch allow for 35 more buttons, so giving a total of 70 buttons. Holding the BANG button down and pressing the ENGINE button allows the user to change game profiles such as Assetto Corsa Competizione (more games to be added), or direct Keyboard and Joystick buttons.  
+
+[Layout Preview](https://bang.systems/project/buttonbox#bangbuttons).  
 
 
 _Tips_  
-[Get your USB Products IDs at pid.codes](https://pid.codes).
+[Get your USB Products IDs at pid.codes](https://pid.codes).  
 
 
 ## Build
-Use PlatformIO for VSCode to build the firmware. 
+Use PlatformIO for VSCode to build the firmware.  
 
 ## Setup
-Soder the USB cable to the Bang Systems Matrix 6x6 Grid PCB and connect the I/O pins to the Arduino Leonardo/Micro board.
+Soder the USB cable to the Bang Systems Matrix 6x6 Grid PCB and connect the I/O pins to the Arduino Leonardo/Micro board.  
 ```cpp
 const unsigned char ROW_NUM = 6;
 const unsigned char COL_NUM = 6;
@@ -30,14 +32,14 @@ unsigned char rowPins[ROW_NUM] = {2, 3, 4, 5, 6, 7};
 unsigned char colPins[COL_NUM] = {A0, A1, A2, A3, A4, A5};
 ```
 
-Set DEBUG to true in the ```Bang.h``` file to enable the debug mode. 
-Uncomment the ```#include <Game/ButtonsDebug.h>``` in the ```main.cpp``` file to enable the debug mode and uncomment the Debug Controller under the ```Controller controllers[] ...``` in the ```main.cpp``` file. This will allow you to test the buttons and place the correct value for the ```buttonsGrid```. Best way is to follow the buttons. e.g. Press the button you want for ```B_BANG``` and check the name printed in the debug console. Lets say it says ```B_ENGINE``` then replace it with ```B_BANG``` and then find the location for ```B_ENGINE``` and replace, etc etc etc.
+Set DEBUG to true in the ```Bang.h``` file to enable the debug mode.  
+Uncomment the ```#include <Game/ButtonsDebug.h>``` in the ```main.cpp``` file to enable the debug mode and uncomment the Debug Controller under the ```Controller controllers[] ...``` in the ```main.cpp``` file. This will allow you to test the buttons and place the correct value for the ```buttonsGrid```. Best way is to follow the buttons. e.g. Press the button you want for ```B_BANG``` and check the name printed in the debug console. Lets say it says ```B_ENGINE``` then replace it with ```B_BANG``` and then find the location for ```B_ENGINE``` and replace, etc etc etc.  
 
 
 
 ### USB Product ID
 _untested_  
-Edit the Arduino hardware boards.txt file:
+Edit the Arduino hardware boards.txt file:  
 ```txt
 ---
 leonardo.build.usb_product="Bang Buttons"
