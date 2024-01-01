@@ -31,14 +31,26 @@ class AssettoCorsaCompetizione : public Game {
 				case B_CYCLE_LIGHT:
 					this->cycleLights(pressed);
 					break;
+				case BANGED + B_CYCLE_LIGHT:
+					this->volumeUp(pressed, 5);
+					break;
 				case B_FLASH:
 					this->flash(pressed);
+					break;
+				case BANGED + B_FLASH:
+					this->volumeDown(pressed, 5);
 					break;
 				case B_RAINLIGHT:
 					this->rainLights(pressed);
 					break;
+				case BANGED + B_RAINLIGHT:
+					this->cycleMap(pressed);
+					break;
 				case B_WIPER:
 					this->cycleWiper(pressed);
+					break;
+				case BANGED + B_WIPER:
+					this->cycleHUD(pressed);
 					break;
 				case B_CAM_BONNET:
 					this->bonnet(pressed);
@@ -52,23 +64,20 @@ class AssettoCorsaCompetizione : public Game {
 				case B_CYCLE_CAMERA:
 					this->cycleCamera(pressed);
 					break;
+				case BANGED + B_CYCLE_CAMERA:
+					this->cycleDriverWheel(pressed);
+					break;
 				case B_INDICATOR_LEFT:
 					this->indicatorLeft(pressed);
+					break;
+				case BANGED + B_INDICATOR_LEFT:
+					this->saveReplay(pressed);
 					break;
 				case B_INDICATOR_RIGHT:
 					this->indicatorRight(pressed);
 					break;
-				case BANGED + B_TIME_TABLE:
-					this->names(pressed);
-					break;
-				case BANGED + B_MFD_PITSTOP:
-					this->raceLogic(pressed);
-					break;
-				case BANGED + B_MFD_STANDINGS:
-					this->dashboardUp(pressed);
-					break;
-				case BANGED + B_MFD_POSITIONS:
-					this->dashboardDown(pressed);
+				case BANGED + B_INDICATOR_RIGHT:
+					this->addHighlight(pressed);
 					break;
 				case B_NAV_UP:
 					this->navigationUp(pressed);
@@ -84,9 +93,6 @@ class AssettoCorsaCompetizione : public Game {
 					break;
 				case B_NAV_SELECT:
 					this->select(pressed);
-					break;
-				case BANGED + B_MFD_ELECTRONICS:
-					this->cycleMFD(pressed);
 					break;
 				case B_BB_UP:
 					this->brakeBiasUp(pressed);
@@ -154,32 +160,35 @@ class AssettoCorsaCompetizione : public Game {
 				case B_SAVE_REPLAY:
 					this->saveReplay(pressed);
 					break;
-				case BANGED + B_CYCLE_LIGHT:
-					this->volumeUp(pressed);
-					break;
-				case BANGED + B_FLASH:
-					this->volumeDown(pressed);
-					break;
 				case B_MFD_PITSTOP:
 					this->mfdPitstop(pressed);
+					break;
+				case BANGED + B_MFD_PITSTOP:
+					this->raceLogic(pressed);
 					break;
 				case B_MFD_STANDINGS:
 					this->mfdStandings(pressed);
 					break;
+				case BANGED + B_MFD_STANDINGS:
+					this->dashboardUp(pressed);
+					break;
 				case B_MFD_POSITIONS:
 					this->mfdPositions(pressed);
+					break;
+				case BANGED + B_MFD_POSITIONS:
+					this->dashboardDown(pressed);
 					break;
 				case B_MFD_ELECTRONICS:
 					this->mfdElectronics(pressed);
 					break;
+				case BANGED + B_MFD_ELECTRONICS:
+					this->cycleMFD(pressed);
+					break;
 				case B_TIME_TABLE:
 					this->timeTable(pressed);
 					break;
-				case BANGED + B_WIPER:
-					this->cycleHUD(pressed);
-					break;
-				case BANGED + B_RAINLIGHT:
-					this->cycleMap(pressed);
+				case BANGED + B_TIME_TABLE:
+					this->names(pressed);
 					break;
 				default:
 					if (DEBUG) {
@@ -191,7 +200,8 @@ class AssettoCorsaCompetizione : public Game {
 		}
 
 	private:
-		void startEngine(bool pressed) { // B_ENGINE
+		void startEngine(bool pressed) {
+			// S
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -202,7 +212,8 @@ class AssettoCorsaCompetizione : public Game {
 			}
 			this->keyRelease('s');
 		}
-		void bangedStartEngine(bool pressed) { // BANGED + B_ENGINE
+		void bangedStartEngine(bool pressed) {
+			// S for 1.1 seconds
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -212,7 +223,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyHold('s', 1100);
 			}
 		}
-		void ignition(bool pressed) { // B_IGNITION
+		void ignition(bool pressed) {
+			// SHIFT + I
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -224,7 +236,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void pitLimiter(bool pressed) { // B_PIT_LIMITER
+		void pitLimiter(bool pressed) {
+			// ALT + L
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -236,7 +249,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
-		void cycleLights(bool pressed) { // B_CYCLE_LIGHTS
+		void cycleLights(bool pressed) {
+			// L
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -246,7 +260,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('l');
 			}
 		}
-		void flash(bool pressed) { // B_FLASH
+		void flash(bool pressed) {
+			// SHIFT + L
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -258,7 +273,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void rainLights(bool pressed) { // B_RAINLIGHTS
+		void rainLights(bool pressed) {
+			// CTRL + L
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -270,7 +286,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void indicatorLeft(bool pressed) { // B_INDICATOR_LEFT
+		void indicatorLeft(bool pressed) {
+			// ALT + Left Arrow
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -282,7 +299,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
-		void indicatorRight(bool pressed) { // B_INDICATOR_RIGHT
+		void indicatorRight(bool pressed) {
+			// ALT + Right Arrow
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -294,7 +312,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
-		void cycleWiper(bool pressed) { // B_CYCLE_WIPERS
+		void cycleWiper(bool pressed) {
+			// ALT + W
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -306,7 +325,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
-		void names(bool pressed) { // B_NAMES
+		void names(bool pressed) {
+			// V
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -316,7 +336,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('v');
 			}
 		}
-		void cycleMFD(bool pressed) { // B_BACK
+		void cycleMFD(bool pressed) {
+			// INSERT
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -326,7 +347,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_INSERT);
 			}
 		}
-		void cycleHUD(bool pressed) { // B_CYCLE_HUD
+		void cycleHUD(bool pressed) {
+			// F2
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -336,7 +358,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_F2);
 			}
 		}
-		void cycleMap(bool pressed) { // B_CYCLE_MAP
+		void cycleMap(bool pressed) {
+			// SHIFT + M
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -348,7 +371,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_SHIFT);	
 			}
 		}
-		void navigationUp(bool pressed) { // B_NAVIGATION_UP
+		void navigationUp(bool pressed) {
+			// Up Arrow
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -358,7 +382,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_UP_ARROW);
 			}
 		}
-		void navigationDown(bool pressed) { // B_NAVIGATION_DOWN
+		void navigationDown(bool pressed) {
+			// Down Arrow
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -368,7 +393,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_DOWN_ARROW);
 			}
 		}
-		void navigationLeft(bool pressed) { // B_NAVIGATION_LEFT
+		void navigationLeft(bool pressed) {
+			// Left Arrow
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -378,7 +404,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_LEFT_ARROW);
 			}
 		}
-		void navigationRight(bool pressed) { // B_NAVIGATION_RIGHT
+		void navigationRight(bool pressed) {
+			// Right Arrow
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -388,7 +415,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_RIGHT_ARROW);
 			}
 		}
-		void select(bool pressed) { // B_SELECT
+		void select(bool pressed) {
+			// Return
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -398,7 +426,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap(KEY_RETURN);
 			}
 		}
-		void raceLogic(bool pressed) { // B_RACELOGIC
+		void raceLogic(bool pressed) {
+			// ALT + D
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -410,7 +439,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
-		void dashboardUp(bool pressed) { // B_DASHBOARD_UP
+		void dashboardUp(bool pressed) {
+			// SHIFT + D
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -422,7 +452,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void dashboardDown(bool pressed) { // B_DASHBOARD_DOWN
+		void dashboardDown(bool pressed) {
+			// CTRL + D
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -434,7 +465,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void timeTable(bool pressed) { // B_RACELOGIC
+		void timeTable(bool pressed) {
+			// TAB
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -447,7 +479,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_TAB);
 			}
 		}
-		void mfdElectronics(bool pressed) { // B_MFD_ELECTRONICS
+		void mfdElectronics(bool pressed) {
+			// O
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -457,7 +490,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('o');
 			}
 		}
-		void mfdPitstop(bool pressed) { // B_MFD_PIT
+		void mfdPitstop(bool pressed) {
+			// P
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -467,7 +501,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('p');
 			}
 		}
-		void mfdStandings(bool pressed) { // B_MFD_STANDINGS
+		void mfdStandings(bool pressed) {
+			// I
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -477,7 +512,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('i');
 			}
 		}
-		void mfdPositions(bool pressed) { // B_MFD_POSITIONS
+		void mfdPositions(bool pressed) {
+			// U
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -487,7 +523,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('u');
 			}
 		}
-		void saveReplay(bool pressed) { // B_SAVE_REPLAY
+		void saveReplay(bool pressed) {
+			// M
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -497,7 +534,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('m');
 			}
 		}
-		void addHighlight(bool pressed) { // B_ADD_HIGHLIGHT
+		void addHighlight(bool pressed) {
+			// ALT + M
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -509,7 +547,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
-		void saveHighlights(bool pressed) { // B_SAVE_HIGHLIGHTS
+		void saveHighlights(bool pressed) {
+			// CTRL + M
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -521,17 +560,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void cycleCamera(bool pressed) { // B_CYCLE_CAMERA
-			if (pressed) {
-				/*
-				if (DEBUG) {
-					Serial.println("cycleCamera");
-				}
-				*/
-				this->keyTap(KEY_F1);
-			}
-		}
-		void cockpit(bool pressed) { // B_COCKPIT_CAM
+		void cockpit(bool pressed) {
+			// 1
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -541,7 +571,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('1');
 			}
 		}
-		void bonnet(bool pressed) { // B_BONNET_CAM
+		void bonnet(bool pressed) {
+			// 2
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -551,7 +582,8 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('2');
 			}
 		}
-		void chase(bool pressed) { // B_CHASE_CAM
+		void chase(bool pressed) {
+			// 3
 			if (pressed) {
 				/*
 				if (DEBUG) {
@@ -561,181 +593,205 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyTap('3');
 			}
 		}
-		void engineMapUp(bool pressed, char times = 1) { // E_ENGINE_MAP_UP
-			// SHIFT + E
-			/*
-			if (DEBUG) {
-				Serial.println("engineMapUp: SHIFT + E");
-			}
-			*/
+		void cycleCamera(bool pressed) {
+			// F1
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("cycleCamera");
+				}
+				*/
+				this->keyTap(KEY_F1);
+			}
+		}
+		void cycleDriverWheel(bool pressed) {
+			// CTRL + I
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("cycleDriverWheel");
+				}
+				*/
+				this->keyHold(KEY_LEFT_CTRL);
+				this->keyTap('i');
+				this->keyRelease(KEY_LEFT_CTRL);
+			}
+		}
+		void engineMapUp(bool pressed, char times = 1) {
+			// SHIFT + E
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("engineMapUp");
+				}
+				*/
 				this->keyHold(KEY_LEFT_SHIFT);
 				this->keyTap('e', times);
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void engineMapDown(bool pressed, char times = 1) { // E_ENGINE_MAP_DN
+		void engineMapDown(bool pressed, char times = 1) {
 			// CTRL + E
-			/*
-			if (DEBUG) {
-				Serial.println("engineMapDown: CTRL + E");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("engineMapDown");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap('e', times);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void brakeBiasUp(bool pressed, char times = 1) { // E_BRAKE_BIAS_UP
+		void brakeBiasUp(bool pressed, char times = 1) {
 			// SHIFT + B
-			/*
-			if (DEBUG) {
-				Serial.println("brakeBiasUp: SHIFT + B");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("brakeBiasUp: SHIFT + B");
+				}
+				*/
 				this->keyHold(KEY_LEFT_SHIFT);
 				this->keyTap('b', times);// 10
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void brakeBiasDown(bool pressed, char times = 1) { // E_BRAKE_BIAS_DN
+		void brakeBiasDown(bool pressed, char times = 1) {
 			// CTRL + B
-			/*
-			if (DEBUG) {
-				Serial.println("brakeBiasDown: CTRL + B");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("brakeBiasDown: CTRL + B");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap('b', times); // 10
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void antilockBrakingSystemUp(bool pressed, char times = 1) { // E_ANTILOCK_BRAKING_SYSTEM_UP
+		void antilockBrakingSystemUp(bool pressed, char times = 1) {
 			// SHIFT + A
-			/*
-			if (DEBUG) {
-				Serial.println("antilockBrakingSystemUp: SHIFT + A");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("antilockBrakingSystemUp: SHIFT + A");
+				}
+				*/
 				this->keyHold(KEY_LEFT_SHIFT);
 				this->keyTap('a', times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void antilockBrakingSystemDown(bool pressed, char times = 1) { // E_ANTILOCK_BRAKING_SYSTEM_DN
+		void antilockBrakingSystemDown(bool pressed, char times = 1) {
 			// CTRL + A
-			/*
-			if (DEBUG) {
-				Serial.println("antilockBrakingSystemDown: CTRL + A");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("antilockBrakingSystemDown: CTRL + A");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap('a', times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void tractionControlUp(bool pressed, char times = 1) { // E_TRACTION_CONTROL_UP
+		void tractionControlUp(bool pressed, char times = 1) {
 			// SHIFT + T
-			/*
-			if (DEBUG) {
-				Serial.println("tractionControlUp: SHIFT + T");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("tractionControlUp: SHIFT + T");
+				}
+				*/
 				this->keyHold(KEY_LEFT_SHIFT);
 				this->keyTap('t', times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void tractionControlDown(bool pressed, char times = 1) { // E_TRACTION_CONTROL_DN
+		void tractionControlDown(bool pressed, char times = 1) {
 			// CTRL + T
-			/*
-			if (DEBUG) {
-				Serial.println("tractionControlDown: CTRL + T");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("tractionControlDown: CTRL + T");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap('t', times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void tractionControlCutUp(bool pressed, char times = 1) { // E_TRACKING_CONTROL_CUT_UP
+		void tractionControlCutUp(bool pressed, char times = 1) {
 			// SHIFT + Y
-			/*
-			if (DEBUG) {
-				Serial.println("tractionControlCutUp: SHIFT + Y");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("tractionControlCutUp: SHIFT + Y");
+				}
+				*/
 				this->keyHold(KEY_LEFT_SHIFT);
 				this->keyTap('y', times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
-		void tractionControlCutDown(bool pressed, char times = 1) { // E_TRACKING_CONTROL_CUT_DN
+		void tractionControlCutDown(bool pressed, char times = 1) {
 			// CTRL + Y
-			/*
-			if (DEBUG) {
-				Serial.println("tractionControlCutDown: CTRL + Y");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("tractionControlCutDown: CTRL + Y");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap('y', times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void specialUp(bool pressed, char times = 1) { // E_SPECIAL_UP
+		void specialUp(bool pressed, char times = 1) {
 			// CTRL + Right Arrow
-			/*
-			if (DEBUG) {
-				Serial.println("specialUp: CTRL + Right Arrow");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("specialUp: CTRL + Right Arrow");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap(KEY_RIGHT_ARROW, times); // 5
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void specialDown(bool pressed, char times = 1) { // E_SPECIAL_DN
+		void specialDown(bool pressed, char times = 1) {
 			// CTRL + Left Arrow
-			/*
-			if (DEBUG) {
-				Serial.println("specialDown: CTRL + Left Arrow");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("specialDown: CTRL + Left Arrow");
+				}
+				*/
 				this->keyHold(KEY_LEFT_CTRL);
 				this->keyTap(KEY_LEFT_ARROW, times); // 5
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
-		void volumeUp(bool pressed, char times = 1) { // E_VOLUME_UP
+		void volumeUp(bool pressed, char times = 1) {
 			// NUM PLUS
-			/*
-			if (DEBUG) {
-				Serial.println("volumeUp: NUM PLUS");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("volumeUp: NUM PLUS");
+				}
+				*/
 				this->keyTap(KEY_KP_PLUS, times); // 10
 			}
 		}
-		void volumeDown(bool pressed, char times = 1) { // E_VOLUME_DN
+		void volumeDown(bool pressed, char times = 1) {
 			// NUM MINUS
-			/*
-			if (DEBUG) {
-				Serial.println("volumeDown: NUM MINUS");
-			}
-			*/
 			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("volumeDown: NUM MINUS");
+				}
+				*/
 				this->keyTap(KEY_KP_MINUS, times); // 10
 			}
 		}

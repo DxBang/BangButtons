@@ -169,7 +169,7 @@ Controller controllers[] = {
 		new Color(120, 1.0, 0.25),
 		new Color(120, 1.0, 0.75),
 		new Color(180, 1.0, 0.5),
-		0.6
+		0.51 // 0.51 seems the lowest intensity that works
 	),
 	Controller(
 		"Keyboard",
@@ -177,15 +177,15 @@ Controller controllers[] = {
 		new Color(24, 1.0, 0.5),
 		new Color(40, 1.0, 0.75),
 		new Color(180, 1.0, 0.5),
-		0.55
+		0.51
 	),
 	Controller(
 		"Joystick",
 		new GameJoystick(&joystick),
 		new Color(240, 1.0, 0.5),
-		new Color(240, 1.0, 0.75),
-		new Color(180, 1.0, 0.5),
-		0.5
+		new Color(300, 1.0, 0.5),
+		new Color(360, 1.0, 0.5),
+		0.51
 	)
 };
 unsigned int controllerCount = sizeof(controllers) / sizeof(controllers[0]);
@@ -474,13 +474,13 @@ void setup() {
 	setRGB(color.getRGB());
 	delay(3000);
 	timer = millis();
-	// if (DEBUG) {
+	if (DEBUG) {
 		Serial.begin(115200);
 		Serial.println("Bang Buttons v1.0");
-	// }
+	}
 	bootAnimation();
 	// buttons.setHoldTime(500);
-	buttons.setDebounceTime(200);
+	buttons.setDebounceTime(50);
 	setController(controllerIndex);
 	stayAwake();
 }
