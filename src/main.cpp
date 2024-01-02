@@ -67,23 +67,23 @@ void hyperSleep();
 // bool BANG = false;
 unsigned long timer = 0;
 
-unsigned int loopCount = 0; // debug
+unsigned short loopCount = 0; // debug
 unsigned long debugTimer = 0; // debug
 
 unsigned long bangTimer = 0;
-unsigned long bangDuration = 3000;
+unsigned short bangDuration = 3000;
 
 unsigned char visualState = 0;
 unsigned char vibrateState = 0;
 
 unsigned long prepareChangeProfileTimer = 0;
-unsigned int prepareChangeProfileDuration = 2000;
+unsigned short prepareChangeProfileDuration = 2000;
 
 bool activateChangeProfile = false; // allow profile change via B_ENGINE
 unsigned long activateChangeProfileTimer = 0;
-unsigned int activateChangeProfileDuration = 10000;
+unsigned short activateChangeProfileDuration = 10000;
 
-unsigned int controllerChangeDelay = 1000;
+unsigned short controllerChangeDelay = 1000;
 unsigned long controllerChangeTimer = 0;
 bool controllerReady = false;
 
@@ -91,13 +91,13 @@ signed char pressCount = 0;
 
 bool blink = false;
 unsigned long blinkTimer = 0;
-unsigned int blinkDuration = 500;
+unsigned short blinkDuration = 500;
 
 bool pulse = false; // vibrate pulse
 unsigned long pulseTimer = 0;
-unsigned int pulseDuration = 500;
+unsigned short pulseDuration = 500;
 unsigned long vibrateTimer = 0;
-unsigned int minVibrateDuration = 200;
+unsigned short minVibrateDuration = 200;
 
 unsigned char sleeping = 0;
 unsigned long sleepTimer = 0;
@@ -559,6 +559,7 @@ void loop() {
 			}
 		break;
 	}
+
 	if (DEBUG) {
 		loopCount++;
 		if (timer - debugTimer > 10000) {

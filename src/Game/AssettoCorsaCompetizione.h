@@ -18,184 +18,184 @@ class AssettoCorsaCompetizione : public Game {
 			switch (button) {
 				case B_ENGINE:
 					this->startEngine(pressed);
-					break;
+				break;
 				case BANGED + B_ENGINE:
 					this->bangedStartEngine(pressed);
-					break;
+				break;
 				case B_IGNITION:
 					this->ignition(pressed);
-					break;
+				break;
 				case B_PIT_LIMITER:
 					this->pitLimiter(pressed);
-					break;
+				break;
 				case B_CYCLE_LIGHT:
 					this->cycleLights(pressed);
-					break;
+				break;
 				case BANGED + B_CYCLE_LIGHT:
 					this->volumeUp(pressed, 5);
-					break;
+				break;
 				case B_FLASH:
 					this->flash(pressed);
-					break;
+				break;
 				case BANGED + B_FLASH:
 					this->volumeDown(pressed, 5);
-					break;
+				break;
 				case B_RAINLIGHT:
 					this->rainLights(pressed);
-					break;
+				break;
 				case BANGED + B_RAINLIGHT:
 					this->cycleMap(pressed);
-					break;
+				break;
 				case B_WIPER:
 					this->cycleWiper(pressed);
-					break;
+				break;
 				case BANGED + B_WIPER:
 					this->cycleHUD(pressed);
-					break;
+				break;
 				case B_CAM_BONNET:
 					this->bonnet(pressed);
-					break;
+				break;
 				case B_CAM_COCKPIT:
 					this->cockpit(pressed);
-					break;
+				break;
 				case B_CAM_CHASE:
 					this->chase(pressed);
-					break;
+				break;
 				case B_CYCLE_CAMERA:
 					this->cycleCamera(pressed);
-					break;
+				break;
 				case BANGED + B_CYCLE_CAMERA:
 					this->cycleDriverWheel(pressed);
-					break;
+				break;
 				case B_INDICATOR_LEFT:
 					this->indicatorLeft(pressed);
-					break;
+				break;
 				case BANGED + B_INDICATOR_LEFT:
 					this->saveReplay(pressed);
-					break;
+				break;
 				case B_INDICATOR_RIGHT:
 					this->indicatorRight(pressed);
-					break;
+				break;
 				case BANGED + B_INDICATOR_RIGHT:
 					this->addHighlight(pressed);
-					break;
+				break;
 				case B_NAV_UP:
 					this->navigationUp(pressed);
-					break;
+				break;
 				case B_NAV_DOWN:
 					this->navigationDown(pressed);
-					break;
+				break;
 				case B_NAV_LEFT:
 					this->navigationLeft(pressed);
-					break;
+				break;
 				case B_NAV_RIGHT:
 					this->navigationRight(pressed);
-					break;
+				break;
 				case B_NAV_SELECT:
 					this->select(pressed);
-					break;
+				break;
 				case B_BB_UP:
 					this->brakeBiasUp(pressed);
-					break;
+				break;
 				case B_BB_DOWN:
 					this->brakeBiasDown(pressed);
-					break;
+				break;
 				case BANGED + B_BB_UP:
 					this->brakeBiasUp(pressed, 10);
-					break;
+				break;
 				case BANGED + B_BB_DOWN:
 					this->brakeBiasDown(pressed, 10);
-					break;
+				break;
 				case B_TC_UP:
 					this->tractionControlUp(pressed);
-					break;
+				break;
 				case BANGED + B_TC_UP:
 					this->tractionControlUp(pressed, 3);
-					break;
+				break;
 				case B_TC_DOWN:
 					this->tractionControlDown(pressed);
-					break;
+				break;
 				case BANGED + B_TC_DOWN:
 					this->tractionControlDown(pressed, 3);
-					break;
+				break;
 				case B_ABS_UP:
 					this->antilockBrakingSystemUp(pressed);
-					break;
+				break;
 				case BANGED + B_ABS_UP:
 					this->antilockBrakingSystemUp(pressed, 3);
-					break;
+				break;
 				case B_ABS_DOWN:
 					this->antilockBrakingSystemDown(pressed);
-					break;
+				break;
 				case BANGED + B_ABS_DOWN:
 					this->antilockBrakingSystemDown(pressed, 3);
-					break;
+				break;
 				case B_TCC_UP:
 					this->tractionControlCutUp(pressed);
-					break;
+				break;
 				case BANGED + B_TCC_UP:
 					this->tractionControlCutUp(pressed, 3);
-					break;
+				break;
 				case B_TCC_DOWN:
 					this->tractionControlCutDown(pressed);
-					break;
+				break;
 				case BANGED + B_TCC_DOWN:
 					this->tractionControlCutDown(pressed, 3);
-					break;				
+				break;				
 				case B_EM_UP:
 					this->engineMapUp(pressed);
-					break;
+				break;
 				case BANGED + B_EM_UP:
 					this->engineMapUp(pressed, 3);
-					break;
+				break;
 				case B_EM_DOWN:
 					this->engineMapDown(pressed);
-					break;
+				break;
 				case BANGED + B_EM_DOWN:
 					this->engineMapDown(pressed, 3);
-					break;
+				break;
 				case B_ADD_HIGHLIGHT:
 					this->addHighlight(pressed);
-					break;
+				break;
 				case B_SAVE_REPLAY:
 					this->saveReplay(pressed);
-					break;
+				break;
 				case B_MFD_PITSTOP:
 					this->mfdPitstop(pressed);
-					break;
+				break;
 				case BANGED + B_MFD_PITSTOP:
 					this->raceLogic(pressed);
-					break;
+				break;
 				case B_MFD_STANDINGS:
 					this->mfdStandings(pressed);
-					break;
+				break;
 				case BANGED + B_MFD_STANDINGS:
 					this->dashboardUp(pressed);
-					break;
+				break;
 				case B_MFD_POSITIONS:
 					this->mfdPositions(pressed);
-					break;
+				break;
 				case BANGED + B_MFD_POSITIONS:
 					this->dashboardDown(pressed);
-					break;
+				break;
 				case B_MFD_ELECTRONICS:
 					this->mfdElectronics(pressed);
-					break;
+				break;
 				case BANGED + B_MFD_ELECTRONICS:
 					this->cycleMFD(pressed);
-					break;
+				break;
 				case B_TIME_TABLE:
 					this->timeTable(pressed);
-					break;
+				break;
 				case BANGED + B_TIME_TABLE:
 					this->names(pressed);
-					break;
+				break;
 				default:
 					if (DEBUG) {
 						Serial.print("Unknown button: ");
 						Serial.println(button);
 					}
-					break;
+				break;
 			}
 		}
 
