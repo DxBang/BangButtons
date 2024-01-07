@@ -111,7 +111,7 @@ float intensity = 0.0;
 // unsigned long feedbackVibrateTimer = 0;
 // unsigned long feedbackVisualTimer = 0;
 
-unsigned char controllerIndex = 3;
+unsigned char controllerIndex = 0;
 
 const unsigned char ROW_NUM = 6;
 const unsigned char COL_NUM = 6;
