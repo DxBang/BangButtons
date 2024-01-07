@@ -220,7 +220,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("bangedStartEngine");
 				}
 				*/
-				this->keyHold('s', 1100);
+				this->keyHold('s', 1000);
 			}
 		}
 		void ignition(bool pressed) {

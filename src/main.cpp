@@ -35,9 +35,9 @@ name=Bang Buttons
 #define VID 0x1209
 #define PID 0xB501
 
-// 15 mins
-#define SLEEP_TIME 900000
-// 30 mins
+// 10 mins / 900000
+#define SLEEP_TIME 600000
+// 30 mins / 1800000
 #define HYPER_SLEEP_TIME 1800000
 
 
@@ -76,7 +76,7 @@ unsigned short bangDuration = 3000;
 unsigned char visualState = 0;
 unsigned char vibrateState = 0;
 
-unsigned long prepareChangeProfileTimer = 0;
+unsigned long prepareChangeProfileTimer = 0; 
 unsigned short prepareChangeProfileDuration = 2000;
 
 bool activateChangeProfile = false; // allow profile change via B_ENGINE
@@ -453,7 +453,7 @@ void hyperSleep() {
 	}
 	sleeping = 2;
 	HSL c = controller.color->getHSL();
-	c.l = 0.01;
+	c.l = 0.005;
 	Color color = Color(c.h, c.s, c.l);
 	setRGB(color.getRGB());
 }
