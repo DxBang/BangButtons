@@ -34,14 +34,13 @@ name=Bang Buttons
 	#define DEBUG false
 #endif
 
-#define VID 0x1209
-#define PID 0xB501
+#define VENDOR_ID 0x1209
+#define PRODUCT_ID 0xB501
 
-// 10 mins / 900000
-#define SLEEP_TIME 5000
-// 30 mins / 1800000
+// 10 mins / 900000 ( 5000 debug )
+#define SLEEP_TIME 900000
+// 30 mins / 1800000 ( 20000 debug )
 #define HYPER_SLEEP_TIME 1800000
-
 
 void setRGB(unsigned char r, unsigned char g, unsigned char b);
 void setRGB(RGB rgb);
@@ -459,7 +458,7 @@ void hyperSleep() {
 	if (DEBUG) {
 		Serial.println("Hyper Sleeping...");
 	}
-	sleeping = 2;
+	sleeping = 3;
 	HSL c = controller.color->getHSL();
 	c.l = 0.005;
 	Color color = Color(c.h, c.s, c.l);
@@ -469,13 +468,19 @@ void sleep() {
 	if (DEBUG) {
 		Serial.println("Sleeping...");
 	}
-	sleeping = 1;
+	sleeping = 2;
 	HSL c = controller.color->getHSL();
 	c.l = 0.1;
 	Color color = Color(c.h, c.s, c.l);
 	setRGB(color.getRGB());
 }
-
+void hal9000() {
+	// Hello Dave...
+	sleeping = 1;
+	HSL c = controller.color->getHSL();
+	easterEggLightness = c.l;
+	Serial.println(easterEggLightness);
+}
 
 void setup() {
 	Color color = Color(240, 1.0, 0.25);
@@ -486,9 +491,7 @@ void setup() {
 		Serial.begin(115200);
 		Serial.println("Bang Buttons v1.0");
 	}
-	else {
-		Serial.begin(115200);
-	}
+	// Serial.begin(115200);
 	bootAnimation();
 	// buttons.setHoldTime(500);
 	buttons.setDebounceTime(50);
@@ -552,42 +555,40 @@ void loop() {
 	
 	switch (sleeping) {
 		case 1: // unit is sleeping, should it go to hyper sleep?
-			if (easterEgg) {
-				// Hello Dave...
-				if (easterEggLoop % 255 == 0) {
-					if (!easterEggLightness) {
-						easterEggLightness = intensity;
-						easterEggPositive = false;
-					}
-					if (easterEggLightness <= 0.002) {
-						easterEggPositive = true;
-					}
-					else if (easterEggLightness >= 0.5) {
-						easterEggPositive = false;
-					}
-					easterEggStep = calculateHal9000(easterEggLightness, easterEggPositive);
-					if (easterEggPositive) {
-						easterEggLightness += easterEggStep;
-					}
-					else {
-						easterEggLightness -= easterEggStep;
-					}
-					HSL c = controller.color->getHSL();
-					c.l = easterEggLightness;
-					Color color = Color(c.h, c.s, c.l);
-					setRGB(color.getRGB());
+			// Hello Dave...
+			if (easterEggLoop % 255 == 0) {
+				if (easterEggLightness <= 0.003) {
+					easterEggPositive = true;
 				}
-				easterEggLoop++;
-				delayMicroseconds(50);
+				else if (easterEggLightness >= 0.5) {
+					easterEggPositive = false;
+				}
+				easterEggStep = calculateHal9000(easterEggLightness, easterEggPositive);
+				if (easterEggPositive) {
+					easterEggLightness += easterEggStep;
+				}
+				else {
+					easterEggLightness -= easterEggStep;
+				}
+				HSL c = controller.color->getHSL();
+				c.l = easterEggLightness;
+				Color color = Color(c.h, c.s, c.l);
+				setRGB(color.getRGB());
 			}
-			else {
-				delay(50);
-			}
+			easterEggLoop++;
+			// delay(100);
+			delayMicroseconds(50);
 			if (timer - sleepTimer > HYPER_SLEEP_TIME) {
 				hyperSleep();
 			}
 		break;
 		case 2: // unit is in hyper sleep...
+			delay(50);
+			if (timer - sleepTimer > HYPER_SLEEP_TIME) {
+				hyperSleep();
+			}
+		break;
+		case 3: // unit is in hyper sleep...
 			// 1 loop per secondv
 			delay(100);
 		break;
@@ -595,12 +596,17 @@ void loop() {
 			// delay half of a nano second
 			delayMicroseconds(500);
 			if (timer - sleepTimer > SLEEP_TIME) {
-				sleep();
+				if (easterEgg) {
+					hal9000();
+				}
+				else {
+					sleep();
+				}
 			}
 		break;
 	}
 
-	// if (DEBUG) {
+	if (DEBUG) {
 		loopCount++;
 		if (timer - debugTimer > 10000) {
 			Serial.print("Loop: ");
@@ -651,6 +657,6 @@ void loop() {
 			loopCount = 0;
 			debugTimer = timer;
 		}
-	// }
+	}
 
 }

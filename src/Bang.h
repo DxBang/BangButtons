@@ -67,7 +67,7 @@ struct RGB {
 };
 
 struct HSL {
-	unsigned int h;
+	unsigned short h;
 	float s;
 	float l;
 };
@@ -79,22 +79,23 @@ class Color {
 		float lightness;
 
 	public:
-		Color(unsigned short h, float s, float l) : hue(h), saturation(s), lightness(l) {}
+		Color(unsigned short hue, float saturation, float lightness) : hue(hue), saturation(saturation), lightness(lightness) {}
 
-		void setHSL(unsigned short h, float s, float l) {
-			hue = h;
-			saturation = s;
-			lightness = l;
+		void setHSL(unsigned short hue, float saturation, float lightness) {
+			this->hue = hue;
+			this->saturation = saturation;
+			this->lightness = lightness;
 		}
-		void setHue(unsigned short h) {
-			hue = h;
+		void setHue(unsigned short hue) {
+			this->hue = hue;
 		}
-		void setSaturation(float s) {
-			saturation = s;
+		void setSaturation(float saturation) {
+			this->saturation = saturation;
 		}
-		void setLightness(float l) {
-			lightness = l;
+		void setLightness(float lightness) {
+			this->lightness = lightness;
 		}
+
 		unsigned short getHue() {
 			return hue;
 		}
@@ -106,9 +107,9 @@ class Color {
 		}
 		HSL getHSL() {
 			HSL hsl;
-			hsl.h = hue;
-			hsl.s = saturation;
-			hsl.l = lightness;
+			hsl.h = this->hue;
+			hsl.s = this->saturation;
+			hsl.l = this->lightness;
 			return hsl;
 		}
 		RGB getRGB() {
@@ -459,10 +460,9 @@ class Controller {
 
 bool easterEgg = false;
 bool easterEggPositive = false;
-float easterEggStep = 0.2;
 unsigned char easterEggLoop = 0;
+float easterEggStep;
 float easterEggLightness;
-
 
 float calculateHal9000(float lightness, bool positive) {
 	const float lowThreshold = 0.003;
