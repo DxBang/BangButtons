@@ -208,9 +208,9 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("startEngine");
 				}
 				*/
-				return this->keyHold('s');
+				return this->keyHold(KEY_S);
 			}
-			this->keyRelease('s');
+			this->keyRelease(KEY_S);
 		}
 		void bangedStartEngine(bool pressed) {
 			// S for 1.1 seconds
@@ -220,7 +220,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("bangedStartEngine");
 				}
 				*/
-				this->keyHold('s', 1000);
+				this->keyHold(KEY_S, 1000);
 			}
 		}
 		void ignition(bool pressed) {
@@ -232,7 +232,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('i');
+				this->keyTap(KEY_I);
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -245,7 +245,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
-				this->keyTap('l');
+				this->keyTap(KEY_L);
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
@@ -257,7 +257,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("cycleLights");
 				}
 				*/
-				this->keyTap('l');
+				this->keyTap(KEY_L);
 			}
 		}
 		void flash(bool pressed) {
@@ -269,7 +269,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('l');
+				this->keyTap(KEY_L);
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -282,7 +282,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('l');
+				this->keyTap(KEY_L);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -321,7 +321,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
-				this->keyTap('w');
+				this->keyTap(KEY_W);
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
@@ -333,7 +333,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("names");
 				}
 				*/
-				this->keyTap('v');
+				this->keyTap(KEY_V);
 			}
 		}
 		void cycleMFD(bool pressed) {
@@ -367,7 +367,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('m');
+				this->keyTap(KEY_M);
 				this->keyRelease(KEY_LEFT_SHIFT);	
 			}
 		}
@@ -435,7 +435,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
-				this->keyTap('d');
+				this->keyTap(KEY_D);
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
@@ -448,7 +448,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('d');
+				this->keyTap(KEY_D);
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -461,7 +461,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('d');
+				this->keyTap(KEY_D);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -487,7 +487,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("mfdElectronics");
 				}
 				*/
-				this->keyTap('o');
+				this->keyTap(KEY_O);
 			}
 		}
 		void mfdPitstop(bool pressed) {
@@ -498,7 +498,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("mfdPitstop");
 				}
 				*/
-				this->keyTap('p');
+				this->keyTap(KEY_P);
 			}
 		}
 		void mfdStandings(bool pressed) {
@@ -509,7 +509,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("mfdStandings");
 				}
 				*/
-				this->keyTap('i');
+				this->keyTap(KEY_I);
 			}
 		}
 		void mfdPositions(bool pressed) {
@@ -520,7 +520,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("mfdPositions");
 				}
 				*/
-				this->keyTap('u');
+				this->keyTap(KEY_U);
 			}
 		}
 		void saveReplay(bool pressed) {
@@ -531,7 +531,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("saveReplay");
 				}
 				*/
-				this->keyTap('m');
+				this->keyTap(KEY_M);
 			}
 		}
 		void addHighlight(bool pressed) {
@@ -543,7 +543,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
-				this->keyTap('m');
+				this->keyTap(KEY_M);
 				this->keyRelease(KEY_LEFT_ALT);
 			}
 		}
@@ -556,7 +556,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('m');
+				this->keyTap(KEY_M);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -568,7 +568,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("cockpit");
 				}
 				*/
-				this->keyTap('1');
+				this->keyTap(KEY_1);
 			}
 		}
 		void bonnet(bool pressed) {
@@ -579,7 +579,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("bonnet");
 				}
 				*/
-				this->keyTap('2');
+				this->keyTap(KEY_2);
 			}
 		}
 		void chase(bool pressed) {
@@ -590,7 +590,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("chase");
 				}
 				*/
-				this->keyTap('3');
+				this->keyTap(KEY_3);
 			}
 		}
 		void cycleCamera(bool pressed) {
@@ -613,7 +613,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('i');
+				this->keyTap(KEY_I);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -626,7 +626,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('e', times);
+				this->keyTap(KEY_E, times);
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -639,7 +639,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('e', times);
+				this->keyTap(KEY_E, times);
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -652,7 +652,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('b', times);// 10
+				this->keyTap(KEY_B, times);// 10
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -665,7 +665,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('b', times); // 10
+				this->keyTap(KEY_B, times); // 10
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -678,7 +678,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('a', times); // 2
+				this->keyTap(KEY_A, times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -691,7 +691,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('a', times); // 2
+				this->keyTap(KEY_A, times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -704,7 +704,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('t', times); // 2
+				this->keyTap(KEY_T, times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -717,7 +717,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('t', times); // 2
+				this->keyTap(KEY_T, times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -730,7 +730,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
-				this->keyTap('y', times); // 2
+				this->keyTap(KEY_Y, times); // 2
 				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
@@ -743,7 +743,7 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
-				this->keyTap('y', times); // 2
+				this->keyTap(KEY_Y, times); // 2
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
@@ -781,7 +781,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("volumeUp: NUM PLUS");
 				}
 				*/
-				this->keyTap(KEY_KP_PLUS, times); // 10
+				this->keyTap(KEYPAD_ADD, times); // 10
 			}
 		}
 		void volumeDown(bool pressed, char times = 1) {
@@ -792,7 +792,7 @@ class AssettoCorsaCompetizione : public Game {
 					Serial.println("volumeDown: NUM MINUS");
 				}
 				*/
-				this->keyTap(KEY_KP_MINUS, times); // 10
+				this->keyTap(KEYPAD_SUBTRACT, times); // 10
 			}
 		}
 };

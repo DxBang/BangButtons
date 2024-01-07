@@ -4,8 +4,13 @@
 #ifndef JOYSTICK_h
 	#include <Joystick.h>
 #endif
+/*
 #ifndef KEYBOARD_h
 	#include <Keyboard.h>
+#endif
+*/
+#ifndef HID_PROJECT_VERSION
+	#include <HID-Project.h>
 #endif
 
 #define DEBUG false
@@ -150,6 +155,7 @@ class Game {
 	public:
 		bool heldEncoder = false;
 		bool isKeyboard = false;
+		bool isConsumer = false;
 		bool isJoystick = false;
 		bool banged = false;
 		int miniDelay = 5;
@@ -163,10 +169,31 @@ class Game {
 		// Joystick_ *joystick;
 		Game() {};
 		virtual void button(unsigned char button, bool pressed) {};
-		virtual void begin() {};
-		virtual void end() {};
+		virtual void begin() {
+			if (this->isKeyboard) {
+				Keyboard.begin();
+			}
+			if (this->isConsumer) {
+				Consumer.begin();
+			}
+		};
+		virtual void end() {
+			if (this->isKeyboard) {
+				Keyboard.end();
+			}
+			if (this->isConsumer) {
+				Consumer.end();
+			}
+		};
 		/* keybaord */
-		void keyPress(unsigned char key) {
+		void key(KeyboardKeycode keyChar, bool pressed) {
+			if (pressed) {
+				this->keyPress(keyChar);
+			} else {
+				this->keyRelease(keyChar);
+			}
+		}
+		void keyPress(KeyboardKeycode key) {
 			/*
 			if (DEBUG) {
 				Serial.print("press: ");
@@ -175,7 +202,7 @@ class Game {
 			*/
 			Keyboard.press(key);
 		}
-		void keyHold(unsigned char key, unsigned int miliseconds = 0) {
+		void keyHold(KeyboardKeycode key, unsigned int miliseconds = 0) {
 			/*
 			if (DEBUG) {
 				Serial.print("KEY HOLD: ");
@@ -193,7 +220,7 @@ class Game {
 				Keyboard.press(key);
 			}
 		}
-		void keyTap(unsigned char key, unsigned char times = 1) {
+		void keyTap(KeyboardKeycode key, unsigned char times = 1) {
 			/*
 			if (DEBUG) {
 				Serial.print("KEY TAP: ");
@@ -213,7 +240,7 @@ class Game {
 				delay(this->recurrenceDelay);
 			}
 		}
-		void keyRelease(unsigned char key) {
+		void keyRelease(KeyboardKeycode key) {
 			/*
 			if (DEBUG) {
 				Serial.print("KEY RELEASE: ");
@@ -230,6 +257,78 @@ class Game {
 			*/
 			Keyboard.releaseAll();
 		}
+		void consumer(ConsumerKeycode keyChar, bool pressed) {
+			if (pressed) {
+				this->consumerPress(keyChar);
+			} else {
+				this->consumerRelease(keyChar);
+			}
+		}
+		void consumerPress(ConsumerKeycode key) {
+			/*
+			if (DEBUG) {
+				Serial.print("press: ");
+				Serial.println(key);
+			}
+			*/
+			Consumer.press(key);
+		}
+		void consumerHold(ConsumerKeycode key, unsigned int miliseconds = 0) {
+			/*
+			if (DEBUG) {
+				Serial.print("KEY HOLD: ");
+				Serial.print(key);
+				Serial.print(" ");
+				Serial.println(miliseconds);
+			}
+			*/
+			if (miliseconds) {
+				Consumer.press(key);
+				delay(miliseconds);
+				Consumer.release(key);
+			}
+			else {
+				Consumer.press(key);
+			}
+		}
+		void consumerTap(ConsumerKeycode key, unsigned char times = 1) {
+			/*
+			if (DEBUG) {
+				Serial.print("KEY TAP: ");
+				Serial.print(key);
+				Serial.print(" ");
+				Serial.println(times);
+			}
+			*/
+			for (unsigned char i = 0; i < times; i++) {
+				Consumer.press(key);
+				delay(this->tapDelay);
+				Consumer.release(key);
+				// check if last iteration
+				if (i == times - 1) {
+					return;
+				}
+				delay(this->recurrenceDelay);
+			}
+		}
+		void consumerRelease(ConsumerKeycode key) {
+			/*
+			if (DEBUG) {
+				Serial.print("KEY RELEASE: ");
+				Serial.println(key);
+			}
+			*/
+			Consumer.release(key);
+		}
+		void consumerReleaseAll() {
+			/*
+			if (DEBUG) {
+				Serial.println("KEY RELEASE ALL");
+			}
+			*/
+			Consumer.releaseAll();
+		}
+
 		/* joystick */
 		/*
 		void joyPress(unsigned char button) {
@@ -353,4 +452,34 @@ class Controller {
 		bool isBanged() {
 			return this->game->banged;
 		};
+		Color* getColor() {
+			return this->color;
+		};
 };
+
+bool easterEgg = false;
+bool easterEggPositive = false;
+float easterEggStep = 0.2;
+unsigned char easterEggLoop = 0;
+float easterEggLightness;
+
+
+float calculateHal9000(float lightness, bool positive) {
+	const float lowThreshold = 0.003;
+	const float highThreshold = 0.5;
+	float lowSpeed = 0.0001;
+	float highSpeed = 0.015;
+	if (positive) {
+		lowSpeed = 0.0002;
+		highSpeed = 0.01;
+	}
+	if (lightness <= lowThreshold) {
+		return lowSpeed;
+	} else if (lightness >= highThreshold) {
+		return highSpeed;
+	} else {
+		float normalized = (lightness - lowThreshold) / (highThreshold - lowThreshold);
+		float factor = pow(normalized, 1.3333);
+		return lowSpeed + factor * (highSpeed - lowSpeed);
+	}
+}

@@ -20,13 +20,15 @@ name=Bang Buttons
 
 #include <Arduino.h>
 #include <Keypad.h>
-#include <Keyboard.h>
+// #include <Keyboard.h>
 #include <Joystick.h>
+#include <HID-Project.h>
 #include <Bang.h>
 // #include <Game/ButtonsDebug.h>
 #include <Game/AssettoCorsaCompetizione.h>
 #include <Game/GameKeyboard.h>
 #include <Game/GameJoystick.h>
+#include <Game/MultimediaKeyboard.h>
 
 #ifndef DEBUG
 	#define DEBUG false
@@ -36,7 +38,7 @@ name=Bang Buttons
 #define PID 0xB501
 
 // 10 mins / 900000
-#define SLEEP_TIME 600000
+#define SLEEP_TIME 5000
 // 30 mins / 1800000
 #define HYPER_SLEEP_TIME 1800000
 
@@ -60,8 +62,6 @@ void wakeUp();
 void stayAwake();
 void sleep();
 void hyperSleep();
-
-
 
 
 // bool BANG = false;
@@ -112,7 +112,7 @@ float intensity = 0.0;
 // unsigned long feedbackVibrateTimer = 0;
 // unsigned long feedbackVisualTimer = 0;
 
-unsigned char controllerIndex = 0;
+unsigned char controllerIndex = 3;
 
 const unsigned char ROW_NUM = 6;
 const unsigned char COL_NUM = 6;
@@ -184,6 +184,14 @@ Controller controllers[] = {
 		new GameJoystick(&joystick),
 		new Color(240, 1.0, 0.5),
 		new Color(300, 1.0, 0.5),
+		new Color(360, 1.0, 0.5),
+		0.51
+	),
+	Controller(
+		"Multimedia Keyboard",
+		new MultimediaKeyboard(),
+		new Color(0, 1.0, 0.5),
+		new Color(240, 1.0, 0.5),
 		new Color(360, 1.0, 0.5),
 		0.51
 	)
@@ -478,6 +486,9 @@ void setup() {
 		Serial.begin(115200);
 		Serial.println("Bang Buttons v1.0");
 	}
+	else {
+		Serial.begin(115200);
+	}
 	bootAnimation();
 	// buttons.setHoldTime(500);
 	buttons.setDebounceTime(50);
@@ -541,8 +552,37 @@ void loop() {
 	
 	switch (sleeping) {
 		case 1: // unit is sleeping, should it go to hyper sleep?
-			// 20 loops per second
-			delay(50);
+			if (easterEgg) {
+				// Hello Dave...
+				if (easterEggLoop % 255 == 0) {
+					if (!easterEggLightness) {
+						easterEggLightness = intensity;
+						easterEggPositive = false;
+					}
+					if (easterEggLightness <= 0.002) {
+						easterEggPositive = true;
+					}
+					else if (easterEggLightness >= 0.5) {
+						easterEggPositive = false;
+					}
+					easterEggStep = calculateHal9000(easterEggLightness, easterEggPositive);
+					if (easterEggPositive) {
+						easterEggLightness += easterEggStep;
+					}
+					else {
+						easterEggLightness -= easterEggStep;
+					}
+					HSL c = controller.color->getHSL();
+					c.l = easterEggLightness;
+					Color color = Color(c.h, c.s, c.l);
+					setRGB(color.getRGB());
+				}
+				easterEggLoop++;
+				delayMicroseconds(50);
+			}
+			else {
+				delay(50);
+			}
 			if (timer - sleepTimer > HYPER_SLEEP_TIME) {
 				hyperSleep();
 			}
@@ -560,7 +600,7 @@ void loop() {
 		break;
 	}
 
-	if (DEBUG) {
+	// if (DEBUG) {
 		loopCount++;
 		if (timer - debugTimer > 10000) {
 			Serial.print("Loop: ");
@@ -601,10 +641,16 @@ void loop() {
 			
 			Serial.print(" | C: ");
 			Serial.print(controller.name);
+			Serial.print(" | E: ");
+			Serial.print(easterEggLoop);
+			Serial.print(" | S: ");
+			Serial.print(easterEggStep);
+			
 			Serial.println(" |");
+
 			loopCount = 0;
 			debugTimer = timer;
 		}
-	}
+	// }
 
 }

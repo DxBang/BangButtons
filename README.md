@@ -9,6 +9,34 @@ _Tips_
 [Get your USB Products IDs at pid.codes](https://pid.codes).  
 
 
+## Patch Notes
+### 1.0.0
+- Initial Release
+- Added support for 6x6 buttons
+- Added support for SHIFT button
+### 1.0.1
+- Renamed SHIFT button to BANG button
+- Added Asseto Corsa Competizione macros to buttons
+- Renamed keyboard presses to prefix as keyStuff
+### 1.0.2
+- Added support for Joystick
+- Added BANGED support for Joystick
+### 1.0.3
+- Tweaked some ACC macros
+- Tweaked Color HSL & RGB 
+### 1.0.4
+- Added BANGED support for ACC macros
+### 1.0.5
+- Added support for keyboard
+- Added BANGED support for keyboard
+### 1.0.6
+- Tweaked ACC Banged Engine start to 1s
+### 1.0.7
+- Added support for Arduino Micro
+- Changed to HID-Project instead of Keyboard.h
+- Added Multimedia keyboard support for testing
+
+
 ## Build
 Use PlatformIO for VSCode to build the firmware.  
 
