@@ -66,7 +66,7 @@ void hyperSleep();
 // bool BANG = false;
 unsigned long timer = 0;
 
-unsigned short loopCount = 0; // debug
+unsigned long loopCount = 0; // debug
 unsigned long debugTimer = 0; // debug
 
 unsigned long bangTimer = 0;
@@ -556,7 +556,7 @@ void loop() {
 	switch (sleeping) {
 		case 1: // unit is sleeping, should it go to hyper sleep?
 			// Hello Dave...
-			if (easterEggLoop % 255 == 0) {
+			if (easterEggLoop % 60 == 0) {
 				if (easterEggLightness <= 0.003) {
 					easterEggPositive = true;
 				}
@@ -577,7 +577,7 @@ void loop() {
 			}
 			easterEggLoop++;
 			// delay(100);
-			delayMicroseconds(50);
+			delayMicroseconds(100);
 			if (timer - sleepTimer > HYPER_SLEEP_TIME) {
 				hyperSleep();
 			}
@@ -594,7 +594,7 @@ void loop() {
 		break;
 		default:
 			// delay half of a nano second
-			delayMicroseconds(500);
+			delayMicroseconds(100);
 			if (timer - sleepTimer > SLEEP_TIME) {
 				if (easterEgg) {
 					hal9000();
