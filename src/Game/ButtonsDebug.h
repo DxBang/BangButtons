@@ -29,8 +29,8 @@ class ButtonsDebug : public Game {
 					Serial.print("B_PIT_LIMITER: ");
 					Serial.println(pressed);
 					break;
-				case B_CYCLE_LIGHT:
-					Serial.print("B_CYCLE_LIGHT: ");
+				case B_LIGHT:
+					Serial.print("B_LIGHT: ");
 					Serial.println(pressed);
 					break;
 				case B_FLASH:
@@ -57,8 +57,8 @@ class ButtonsDebug : public Game {
 					Serial.print("B_CAM_CHASE: ");
 					Serial.println(pressed);
 					break;
-				case B_CYCLE_CAMERA:
-					Serial.print("B_CYCLE_CAMERA: ");
+				case B_CAMERA:
+					Serial.print("B_CAMERA: ");
 					Serial.println(pressed);
 					break;
 				case B_INDICATOR_LEFT:

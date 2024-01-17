@@ -27,7 +27,7 @@ class MultimediaKeyboard : public Game {
 				case B_FLASH:
 					this->consumer(MEDIA_VOLUME_UP, pressed);
 				break;
-				case B_CYCLE_LIGHT:
+				case B_LIGHT:
 					this->consumer(MEDIA_VOLUME_DOWN, pressed);
 				break;
 				case B_RAINLIGHT:

@@ -28,10 +28,10 @@ class AssettoCorsaCompetizione : public Game {
 				case B_PIT_LIMITER:
 					this->pitLimiter(pressed);
 				break;
-				case B_CYCLE_LIGHT:
+				case B_LIGHT:
 					this->cycleLights(pressed);
 				break;
-				case BANGED + B_CYCLE_LIGHT:
+				case BANGED + B_LIGHT:
 					this->volumeUp(pressed, 5);
 				break;
 				case B_FLASH:
@@ -61,10 +61,10 @@ class AssettoCorsaCompetizione : public Game {
 				case B_CAM_CHASE:
 					this->chase(pressed);
 				break;
-				case B_CYCLE_CAMERA:
+				case B_CAMERA:
 					this->cycleCamera(pressed);
 				break;
-				case BANGED + B_CYCLE_CAMERA:
+				case BANGED + B_CAMERA:
 					this->cycleDriverWheel(pressed);
 				break;
 				case B_INDICATOR_LEFT:

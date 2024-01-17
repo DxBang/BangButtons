@@ -26,14 +26,14 @@
 #define B_ENGINE 1
 #define B_IGNITION 2
 #define B_PIT_LIMITER 3
-#define B_CYCLE_LIGHT 4
+#define B_LIGHT 4
 #define B_FLASH 5
 #define B_RAINLIGHT 6
 #define B_WIPER 7
 #define B_CAM_BONNET 8
 #define B_CAM_COCKPIT 9
 #define B_CAM_CHASE 10
-#define B_CYCLE_CAMERA 11
+#define B_CAMERA 11
 #define B_INDICATOR_LEFT 12
 #define B_INDICATOR_RIGHT 13
 #define B_TIME_TABLE 14

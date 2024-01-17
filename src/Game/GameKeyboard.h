@@ -24,7 +24,7 @@ class GameKeyboard : public Game {
 				case B_FLASH:
 					this->key(KEY_1, pressed);
 				break;
-				case B_CYCLE_LIGHT:
+				case B_LIGHT:
 					this->key(KEY_2, pressed);
 				break;
 				case B_RAINLIGHT:
@@ -121,14 +121,14 @@ class GameKeyboard : public Game {
 				case B_CAM_CHASE:
 					this->key(KEY_D, pressed);
 				break;
-				case B_CYCLE_CAMERA:
+				case B_CAMERA:
 					this->key(KEY_S, pressed);
 				break;
 
 				case BANGED + B_FLASH:
 					this->key(KEY_F1, pressed);
 				break;
-				case BANGED + B_CYCLE_LIGHT:
+				case BANGED + B_LIGHT:
 					this->key(KEY_F2, pressed);
 				break;
 				case BANGED + B_RAINLIGHT:
@@ -225,7 +225,7 @@ class GameKeyboard : public Game {
 				case BANGED + B_CAM_CHASE:
 					this->key(KEY_G, pressed);
 				break;
-				case BANGED + B_CYCLE_CAMERA:
+				case BANGED + B_CAMERA:
 					this->key(KEY_H, pressed);
 				break;
 			}

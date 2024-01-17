@@ -13,21 +13,21 @@ class AssettoCorsaCompetizioneCamera : public Game {
 	private:
 		void selectCockpitCamera(bool pressed) {
 			if (pressed) {
-				return this->keyHold(1);
+				return this->keyHold(KEY_1);
 			}
-			return this->keyRelease(1);
+			return this->keyRelease(KEY_1);
 		}
 		void selectBonnetCamera(bool pressed) {
 			if (pressed) {
-				return this->keyHold(2);
+				return this->keyHold(KEY_2);
 			}
-			return this->keyRelease(2);
+			return this->keyRelease(KEY_2);
 		}
 		void selectChaseCamera(bool pressed) {
 			if (pressed) {
-				return this->keyHold(3);
+				return this->keyHold(KEY_3);
 			}
-			return this->keyRelease(3);
+			return this->keyRelease(KEY_3);
 		}
 		void cycleCamera(bool pressed) {
 			if (pressed) {
