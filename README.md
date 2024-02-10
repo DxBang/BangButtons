@@ -41,7 +41,8 @@ _Tips_
 Use PlatformIO for VSCode to build the firmware.  
 
 ## Setup
-Soder the USB cable to the Bang Systems Matrix 6x6 Grid PCB and connect the I/O pins to the Arduino Leonardo/Micro board.  
+Soder the USB cable to the [Bang Systems Matrix 6x6 Grid PCB](https://bang.systems/project/pcb/matrix-grid) and connect the I/O pins to the Arduino Leonardo/Micro board. 
+
 ```cpp
 const unsigned char ROW_NUM = 6;
 const unsigned char COL_NUM = 6;
