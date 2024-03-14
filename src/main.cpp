@@ -20,7 +20,6 @@ name=Bang Buttons
 
 #include <Arduino.h>
 #include <Keypad.h>
-// #include <Keyboard.h>
 #include <Joystick.h>
 #include <HID-Project.h>
 #include <Bang.h>
