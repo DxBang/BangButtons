@@ -10,7 +10,6 @@
 	#include <HID-Project.h>
 #endif
 
-
 class GameKeyboard : public Game {
 	public:
 		GameKeyboard() {

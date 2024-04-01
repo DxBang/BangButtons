@@ -19,39 +19,33 @@ class AssettoCorsaCompetizione : public Game {
 				case B_ENGINE:
 					this->startEngine(pressed);
 				break;
-				case BANGED + B_ENGINE:
-					this->bangedStartEngine(pressed);
-				break;
 				case B_IGNITION:
 					this->ignition(pressed);
 				break;
 				case B_PIT_LIMITER:
 					this->pitLimiter(pressed);
 				break;
+
 				case B_LIGHT:
 					this->cycleLights(pressed);
-				break;
-				case BANGED + B_LIGHT:
-					this->volumeUp(pressed, 5);
 				break;
 				case B_FLASH:
 					this->flash(pressed);
 				break;
-				case BANGED + B_FLASH:
-					this->volumeDown(pressed, 5);
-				break;
 				case B_RAINLIGHT:
 					this->rainLights(pressed);
-				break;
-				case BANGED + B_RAINLIGHT:
-					this->cycleMap(pressed);
 				break;
 				case B_WIPER:
 					this->cycleWiper(pressed);
 				break;
-				case BANGED + B_WIPER:
-					this->cycleHUD(pressed);
+
+				case B_INDICATOR_LEFT:
+					this->indicatorLeft(pressed);
 				break;
+				case B_INDICATOR_RIGHT:
+					this->indicatorRight(pressed);
+				break;
+
 				case B_CAM_BONNET:
 					this->bonnet(pressed);
 				break;
@@ -64,21 +58,27 @@ class AssettoCorsaCompetizione : public Game {
 				case B_CAMERA:
 					this->cycleCamera(pressed);
 				break;
-				case BANGED + B_CAMERA:
-					this->cycleDriverWheel(pressed);
+
+				case B_TIME_TABLE:
+					this->timeTable(pressed);
 				break;
-				case B_INDICATOR_LEFT:
-					this->indicatorLeft(pressed);
+				case B_MFD_PITSTOP:
+					this->mfdPitstop(pressed);
 				break;
-				case BANGED + B_INDICATOR_LEFT:
-					this->saveReplay(pressed);
+				case B_MFD_STANDINGS:
+					this->mfdStandings(pressed);
 				break;
-				case B_INDICATOR_RIGHT:
-					this->indicatorRight(pressed);
+				case B_MFD_POSITIONS:
+					this->mfdPositions(pressed);
 				break;
-				case BANGED + B_INDICATOR_RIGHT:
-					this->addHighlight(pressed);
+
+				case B_NAV_SELECT:
+					this->select(pressed);
 				break;
+				case B_MFD_ELECTRONICS:
+					this->mfdElectronics(pressed);
+				break;
+
 				case B_NAV_UP:
 					this->navigationUp(pressed);
 				break;
@@ -91,105 +91,162 @@ class AssettoCorsaCompetizione : public Game {
 				case B_NAV_RIGHT:
 					this->navigationRight(pressed);
 				break;
-				case B_NAV_SELECT:
-					this->select(pressed);
-				break;
+
 				case B_BB_UP:
-					this->brakeBiasUp(pressed);
+					this->brakeBiasUp(pressed, 5);
 				break;
 				case B_BB_DOWN:
-					this->brakeBiasDown(pressed);
+					this->brakeBiasDown(pressed, 5);
 				break;
-				case BANGED + B_BB_UP:
-					this->brakeBiasUp(pressed, 10);
-				break;
-				case BANGED + B_BB_DOWN:
-					this->brakeBiasDown(pressed, 10);
-				break;
+
 				case B_TC_UP:
 					this->tractionControlUp(pressed);
-				break;
-				case BANGED + B_TC_UP:
-					this->tractionControlUp(pressed, 3);
 				break;
 				case B_TC_DOWN:
 					this->tractionControlDown(pressed);
 				break;
-				case BANGED + B_TC_DOWN:
-					this->tractionControlDown(pressed, 3);
-				break;
+
 				case B_ABS_UP:
 					this->antilockBrakingSystemUp(pressed);
-				break;
-				case BANGED + B_ABS_UP:
-					this->antilockBrakingSystemUp(pressed, 3);
 				break;
 				case B_ABS_DOWN:
 					this->antilockBrakingSystemDown(pressed);
 				break;
-				case BANGED + B_ABS_DOWN:
-					this->antilockBrakingSystemDown(pressed, 3);
-				break;
+
 				case B_TCC_UP:
 					this->tractionControlCutUp(pressed);
-				break;
-				case BANGED + B_TCC_UP:
-					this->tractionControlCutUp(pressed, 3);
 				break;
 				case B_TCC_DOWN:
 					this->tractionControlCutDown(pressed);
 				break;
-				case BANGED + B_TCC_DOWN:
-					this->tractionControlCutDown(pressed, 3);
-				break;				
+
 				case B_EM_UP:
 					this->engineMapUp(pressed);
-				break;
-				case BANGED + B_EM_UP:
-					this->engineMapUp(pressed, 3);
 				break;
 				case B_EM_DOWN:
 					this->engineMapDown(pressed);
 				break;
-				case BANGED + B_EM_DOWN:
-					this->engineMapDown(pressed, 3);
-				break;
+
 				case B_ADD_HIGHLIGHT:
 					this->addHighlight(pressed);
 				break;
 				case B_SAVE_REPLAY:
 					this->saveReplay(pressed);
 				break;
-				case B_MFD_PITSTOP:
-					this->mfdPitstop(pressed);
+
+				/* banged */
+				case BANGED + B_ENGINE:
+					this->bangedStartEngine(pressed);
+				break;
+				case BANGED + B_IGNITION:
+					this->ignition(pressed);
+				break;
+				case BANGED + B_PIT_LIMITER:
+					this->pitLimiter(pressed);
+				break;
+
+				case BANGED + B_LIGHT:
+					this->volumeUp(pressed, 5);
+				break;
+				case BANGED + B_FLASH:
+					this->volumeDown(pressed, 5);
+				break;
+				case BANGED + B_RAINLIGHT:
+					this->cycleMap(pressed);
+				break;
+				case BANGED + B_WIPER:
+					this->cycleHUD(pressed);
+				break;
+
+				case BANGED + B_INDICATOR_LEFT:
+					this->saveReplay(pressed);
+				break;
+				case BANGED + B_INDICATOR_RIGHT:
+					this->addHighlight(pressed);
+				break;
+
+				case BANGED + B_CAM_BONNET:
+					this->freeCamera(pressed);
+				break;
+				case BANGED + B_CAM_COCKPIT:
+					this->selectTVCamera(pressed);
+				break;
+				case BANGED + B_CAM_CHASE:
+					this->cycleOnboardCamera(pressed);
+				break;
+				case BANGED + B_CAMERA:
+					this->cycleDriverWheel(pressed);
+				break;
+
+				case BANGED + B_TIME_TABLE:
+					this->names(pressed);
 				break;
 				case BANGED + B_MFD_PITSTOP:
 					this->raceLogic(pressed);
 				break;
-				case B_MFD_STANDINGS:
-					this->mfdStandings(pressed);
-				break;
 				case BANGED + B_MFD_STANDINGS:
 					this->dashboardUp(pressed);
-				break;
-				case B_MFD_POSITIONS:
-					this->mfdPositions(pressed);
 				break;
 				case BANGED + B_MFD_POSITIONS:
 					this->dashboardDown(pressed);
 				break;
-				case B_MFD_ELECTRONICS:
-					this->mfdElectronics(pressed);
+
+				case BANGED + B_NAV_SELECT:
+					this->select(pressed);
 				break;
 				case BANGED + B_MFD_ELECTRONICS:
 					this->cycleMFD(pressed);
 				break;
-				case B_TIME_TABLE:
-					this->timeTable(pressed);
+
+				case BANGED + B_NAV_UP:
+					this->focusPlayerCar(pressed);
 				break;
-				case BANGED + B_TIME_TABLE:
-					this->names(pressed);
+				case BANGED + B_NAV_DOWN:
+					this->toggleConsole(pressed);
 				break;
+				case BANGED + B_NAV_LEFT:
+					this->focusPreviousCar(pressed);
+				break;
+				case BANGED + B_NAV_RIGHT:
+					this->focusNextCar(pressed);
+				break;
+
+				case BANGED + B_BB_UP:
+					this->brakeBiasUp(pressed, 15);
+				break;
+				case BANGED + B_BB_DOWN:
+					this->brakeBiasDown(pressed, 15);
+				break;
+
+				case BANGED + B_TC_UP:
+					this->tractionControlUp(pressed, 3);
+				break;
+				case BANGED + B_TC_DOWN:
+					this->tractionControlDown(pressed, 3);
+				break;
+
+				case BANGED + B_ABS_UP:
+					this->antilockBrakingSystemUp(pressed, 3);
+				break;
+				case BANGED + B_ABS_DOWN:
+					this->antilockBrakingSystemDown(pressed, 3);
+				break;
+
+				case BANGED + B_TCC_UP:
+					this->tractionControlCutUp(pressed, 3);
+				break;
+				case BANGED + B_TCC_DOWN:
+					this->tractionControlCutDown(pressed, 3);
+				break;
+
+				case BANGED + B_EM_UP:
+					this->engineMapUp(pressed, 3);
+				break;
+				case BANGED + B_EM_DOWN:
+					this->engineMapDown(pressed, 3);
+				break;
+
+				/* failed to find the button */
 				default:
 					if (DEBUG) {
 						Serial.print("Unknown button: ");
@@ -368,7 +425,7 @@ class AssettoCorsaCompetizione : public Game {
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
 				this->keyTap(KEY_M);
-				this->keyRelease(KEY_LEFT_SHIFT);	
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
 		void navigationUp(bool pressed) {
@@ -424,6 +481,45 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyTap(KEY_RETURN);
+			}
+		}
+		void focusPlayerCar(bool pressed) {
+			// CTRL + F
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("focusPlayerCar");
+				}
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap(KEY_UP_ARROW);
+				this->keyRelease(KEY_LEFT_SHIFT);
+			}
+		}
+		void focusNextCar(bool pressed) {
+			// CTRL + N
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("focusNextCar");
+				}
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap(KEY_RIGHT_ARROW);
+				this->keyRelease(KEY_LEFT_SHIFT);
+			}
+		}
+		void focusPreviousCar(bool pressed) {
+			// CTRL + P
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("focusPreviousCar");
+				}
+				*/
+				this->keyHold(KEY_LEFT_SHIFT);
+				this->keyTap(KEY_LEFT_ARROW);
+				this->keyRelease(KEY_LEFT_SHIFT);
 			}
 		}
 		void raceLogic(bool pressed) {
@@ -617,6 +713,39 @@ class AssettoCorsaCompetizione : public Game {
 				this->keyRelease(KEY_LEFT_CTRL);
 			}
 		}
+		void selectTVCamera(bool pressed) {
+			// CTRL + F1
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("selectTVCamera");
+				}
+				*/
+				this->keyTap(KEY_F3);
+			}
+		}
+		void cycleOnboardCamera(bool pressed) {
+			// CTRL + F2
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("cycleTVCamera");
+				}
+				*/
+				this->keyTap(KEY_F6);
+			}
+		}
+		void freeCamera(bool pressed) {
+			// CTRL + F2
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("cycleTVCamera");
+				}
+				*/
+				this->keyTap(KEY_F7);
+			}
+		}
 		void engineMapUp(bool pressed, char times = 1) {
 			// SHIFT + E
 			if (pressed) {
@@ -793,6 +922,18 @@ class AssettoCorsaCompetizione : public Game {
 				}
 				*/
 				this->keyTap(KEYPAD_SUBTRACT, times); // 10
+			}
+		}
+		void toggleConsole(bool pressed) {
+			// CTRL + ALT + C
+			if (pressed) {
+				/*
+				if (DEBUG) {
+					Serial.println("toggleConsole: CTRL + ALT + C");
+				}
+				*/
+				// press ~ to open console
+				this->keyTap(KEY_TILDE);
 			}
 		}
 };

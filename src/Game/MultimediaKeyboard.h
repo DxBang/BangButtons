@@ -10,7 +10,6 @@
 	#include <HID-Project.h>
 #endif
 
-
 class MultimediaKeyboard : public Game {
 	public:
 		MultimediaKeyboard() {
@@ -21,7 +20,6 @@ class MultimediaKeyboard : public Game {
 			}
 			easterEgg = true;
 		};
-
 		void button(unsigned char button, bool pressed) override {
 			switch (button) {
 				case B_FLASH:

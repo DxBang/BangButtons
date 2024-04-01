@@ -3,7 +3,6 @@
 #endif
 
 class ButtonsDebug : public Game {
-
 	public:
 		ButtonsDebug() {
 			isKeyboard = true;

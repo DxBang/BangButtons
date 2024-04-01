@@ -149,7 +149,6 @@ class Color {
 			rgb.b = (b_temp + m) * 255;
 			return rgb;
 		}
-
 };
 
 class Game {

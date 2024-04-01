@@ -11,7 +11,7 @@
 
 // get your USB Products IDs at pid.codes //
 
-Setup: 
+Setup:
 VID=0x1209
 PID=0xB501
 name=Bang Buttons
@@ -74,7 +74,7 @@ unsigned short bangDuration = 3000;
 unsigned char visualState = 0;
 unsigned char vibrateState = 0;
 
-unsigned long prepareChangeProfileTimer = 0; 
+unsigned long prepareChangeProfileTimer = 0;
 unsigned short prepareChangeProfileDuration = 2000;
 
 bool activateChangeProfile = false; // allow profile change via B_ENGINE
@@ -165,17 +165,17 @@ Controller controllers[] = {
 		"Assetto Corsa Competizione",
 		new AssettoCorsaCompetizione(),
 		new Color(120, 1.0, 0.25),
-		new Color(120, 1.0, 0.75),
+		new Color(120, 1.0, 0.5),
 		new Color(180, 1.0, 0.5),
-		0.51 // 0.51 seems the lowest intensity that works
+		0.0 // 0.51 seems the lowest intensity that works
 	),
 	Controller(
 		"Keyboard",
 		new GameKeyboard(),
 		new Color(24, 1.0, 0.5),
-		new Color(40, 1.0, 0.75),
+		new Color(40, 1.0, 0.5),
 		new Color(180, 1.0, 0.5),
-		0.51
+		0.0
 	),
 	Controller(
 		"Joystick",
@@ -183,7 +183,7 @@ Controller controllers[] = {
 		new Color(240, 1.0, 0.5),
 		new Color(300, 1.0, 0.5),
 		new Color(360, 1.0, 0.5),
-		0.51
+		0.0
 	),
 	Controller(
 		"Multimedia Keyboard",
@@ -191,7 +191,7 @@ Controller controllers[] = {
 		new Color(0, 1.0, 0.5),
 		new Color(240, 1.0, 0.5),
 		new Color(360, 1.0, 0.5),
-		0.51
+		0.0
 	)
 };
 unsigned int controllerCount = sizeof(controllers) / sizeof(controllers[0]);
@@ -246,7 +246,7 @@ void setHSL(int h, float s, float l) {
 */
 
 void feedbackVibrate(bool toggle) {
-	// return;
+	return;
 	if (toggle) {
 		// Serial.println("feedbackVibrate: on");
 		analogWrite(
@@ -498,7 +498,7 @@ void setup() {
 	// Serial.begin(115200);
 	bootAnimation();
 	// buttons.setHoldTime(500);
-	buttons.setDebounceTime(50);
+	buttons.setDebounceTime(100);
 	setController(controllerIndex);
 	stayAwake();
 }
@@ -556,7 +556,7 @@ void loop() {
 			modeDefault();
 		}
 	}
-	
+
 	switch (sleeping) {
 		case 1: // unit is sleeping, should it go to hyper sleep?
 			// Hello Dave...
@@ -641,21 +641,21 @@ void loop() {
 			Serial.print(countfeedbackVisualState);
 			Serial.print(" | FVib: ");
 			Serial.print(countVibrateFeedback);
-			Serial.print(" | FChk: ");	
+			Serial.print(" | FChk: ");
 			Serial.print(countCheckFeedback);
 			*/
 			Serial.print(" | ViS: ");
 			Serial.print(visualState);
 			Serial.print(" | ViB: ");
 			Serial.print(vibrateState);
-			
+
 			Serial.print(" | C: ");
 			Serial.print(controller.name);
 			Serial.print(" | E: ");
 			Serial.print(easterEggLoop);
 			Serial.print(" | S: ");
 			Serial.print(easterEggStep);
-			
+
 			Serial.println(" |");
 
 			loopCount = 0;

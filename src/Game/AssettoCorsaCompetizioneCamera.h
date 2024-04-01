@@ -3,7 +3,6 @@
 #endif
 
 class AssettoCorsaCompetizioneCamera : public Game {
-
 	public:
 		AssettoCorsaCompetizioneCamera() {
 			isKeyboard = true;
