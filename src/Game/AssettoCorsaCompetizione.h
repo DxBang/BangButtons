@@ -3,18 +3,15 @@
 #endif
 
 class AssettoCorsaCompetizione : public Game {
-
 	public:
 		AssettoCorsaCompetizione() {
 			isKeyboard = true;
 		}
 		void button(unsigned char button, bool pressed) override {
-			if (DEBUG) {
-				Serial.print("AssettoCorsaCompetizione: ");
-				Serial.print(button);
-				Serial.print(" ");
-				Serial.println(pressed);
-			}
+			debug("AssettoCorsaCompetizione: ");
+			debug(button);
+			debug(" ");
+			debugln(pressed);
 			switch (button) {
 				case B_ENGINE:
 					this->startEngine(pressed);
@@ -249,8 +246,8 @@ class AssettoCorsaCompetizione : public Game {
 				/* failed to find the button */
 				default:
 					if (DEBUG) {
-						Serial.print("Unknown button: ");
-						Serial.println(button);
+						debug("Unknown button: ");
+						debugln(button);
 					}
 				break;
 			}
@@ -262,7 +259,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("startEngine");
+					debugln("startEngine");
 				}
 				*/
 				return this->keyHold(KEY_S);
@@ -270,11 +267,11 @@ class AssettoCorsaCompetizione : public Game {
 			this->keyRelease(KEY_S);
 		}
 		void bangedStartEngine(bool pressed) {
-			// S for 1.1 seconds
+			// S for 1.0 seconds
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("bangedStartEngine");
+					debugln("bangedStartEngine");
 				}
 				*/
 				this->keyHold(KEY_S, 1000);
@@ -285,7 +282,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("ignition");
+					debugln("ignition");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -298,7 +295,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("pitLimiter");
+					debugln("pitLimiter");
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
@@ -311,7 +308,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleLights");
+					debugln("cycleLights");
 				}
 				*/
 				this->keyTap(KEY_L);
@@ -322,7 +319,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("flash");
+					debugln("flash");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -335,7 +332,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("rainLights");
+					debugln("rainLights");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -348,7 +345,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("indicatorLeft");
+					debugln("indicatorLeft");
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
@@ -361,7 +358,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("B_INDICATOR_RIGHT");
+					debugln("B_INDICATOR_RIGHT");
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
@@ -374,7 +371,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleWiper");
+					debugln("cycleWiper");
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
@@ -387,7 +384,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("names");
+					debugln("names");
 				}
 				*/
 				this->keyTap(KEY_V);
@@ -398,7 +395,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleMFD");
+					debugln("cycleMFD");
 				}
 				*/
 				this->keyTap(KEY_INSERT);
@@ -409,7 +406,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleHUD");
+					debugln("cycleHUD");
 				}
 				*/
 				this->keyTap(KEY_F2);
@@ -420,7 +417,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleMap");
+					debugln("cycleMap");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -433,7 +430,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("navigationUp");
+					debugln("navigationUp");
 				}
 				*/
 				this->keyTap(KEY_UP_ARROW);
@@ -444,7 +441,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("navigationDown");
+					debugln("navigationDown");
 				}
 				*/
 				this->keyTap(KEY_DOWN_ARROW);
@@ -455,7 +452,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("navigationLeft");
+					debugln("navigationLeft");
 				}
 				*/
 				this->keyTap(KEY_LEFT_ARROW);
@@ -466,7 +463,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("navigationRight");
+					debugln("navigationRight");
 				}
 				*/
 				this->keyTap(KEY_RIGHT_ARROW);
@@ -477,7 +474,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("select");
+					debugln("select");
 				}
 				*/
 				this->keyTap(KEY_RETURN);
@@ -488,7 +485,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("focusPlayerCar");
+					debugln("focusPlayerCar");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -501,7 +498,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("focusNextCar");
+					debugln("focusNextCar");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -514,7 +511,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("focusPreviousCar");
+					debugln("focusPreviousCar");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -527,7 +524,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("raceLogic");
+					debugln("raceLogic");
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
@@ -540,7 +537,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("dashboardUp");
+					debugln("dashboardUp");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -553,7 +550,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("dashboardDown");
+					debugln("dashboardDown");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -566,7 +563,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("timeTable");
+					debugln("timeTable");
 				}
 				*/
 				this->keyHold(KEY_TAB);
@@ -580,7 +577,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("mfdElectronics");
+					debugln("mfdElectronics");
 				}
 				*/
 				this->keyTap(KEY_O);
@@ -591,7 +588,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("mfdPitstop");
+					debugln("mfdPitstop");
 				}
 				*/
 				this->keyTap(KEY_P);
@@ -602,7 +599,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("mfdStandings");
+					debugln("mfdStandings");
 				}
 				*/
 				this->keyTap(KEY_I);
@@ -613,7 +610,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("mfdPositions");
+					debugln("mfdPositions");
 				}
 				*/
 				this->keyTap(KEY_U);
@@ -624,7 +621,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("saveReplay");
+					debugln("saveReplay");
 				}
 				*/
 				this->keyTap(KEY_M);
@@ -635,7 +632,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("addHighlight");
+					debugln("addHighlight");
 				}
 				*/
 				this->keyHold(KEY_LEFT_ALT);
@@ -648,7 +645,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("saveHighlights");
+					debugln("saveHighlights");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -661,7 +658,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cockpit");
+					debugln("cockpit");
 				}
 				*/
 				this->keyTap(KEY_1);
@@ -672,7 +669,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("bonnet");
+					debugln("bonnet");
 				}
 				*/
 				this->keyTap(KEY_2);
@@ -683,7 +680,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("chase");
+					debugln("chase");
 				}
 				*/
 				this->keyTap(KEY_3);
@@ -694,7 +691,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleCamera");
+					debugln("cycleCamera");
 				}
 				*/
 				this->keyTap(KEY_F1);
@@ -705,7 +702,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleDriverWheel");
+					debugln("cycleDriverWheel");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -718,7 +715,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("selectTVCamera");
+					debugln("selectTVCamera");
 				}
 				*/
 				this->keyTap(KEY_F3);
@@ -729,7 +726,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleTVCamera");
+					debugln("cycleTVCamera");
 				}
 				*/
 				this->keyTap(KEY_F6);
@@ -740,7 +737,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("cycleTVCamera");
+					debugln("cycleTVCamera");
 				}
 				*/
 				this->keyTap(KEY_F7);
@@ -751,7 +748,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("engineMapUp");
+					debugln("engineMapUp");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -764,7 +761,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("engineMapDown");
+					debugln("engineMapDown");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -777,7 +774,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("brakeBiasUp: SHIFT + B");
+					debugln("brakeBiasUp: SHIFT + B");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -790,7 +787,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("brakeBiasDown: CTRL + B");
+					debugln("brakeBiasDown: CTRL + B");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -803,7 +800,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("antilockBrakingSystemUp: SHIFT + A");
+					debugln("antilockBrakingSystemUp: SHIFT + A");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -816,7 +813,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("antilockBrakingSystemDown: CTRL + A");
+					debugln("antilockBrakingSystemDown: CTRL + A");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -829,7 +826,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("tractionControlUp: SHIFT + T");
+					debugln("tractionControlUp: SHIFT + T");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -842,7 +839,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("tractionControlDown: CTRL + T");
+					debugln("tractionControlDown: CTRL + T");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -855,7 +852,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("tractionControlCutUp: SHIFT + Y");
+					debugln("tractionControlCutUp: SHIFT + Y");
 				}
 				*/
 				this->keyHold(KEY_LEFT_SHIFT);
@@ -868,7 +865,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("tractionControlCutDown: CTRL + Y");
+					debugln("tractionControlCutDown: CTRL + Y");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -881,7 +878,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("specialUp: CTRL + Right Arrow");
+					debugln("specialUp: CTRL + Right Arrow");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -894,7 +891,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("specialDown: CTRL + Left Arrow");
+					debugln("specialDown: CTRL + Left Arrow");
 				}
 				*/
 				this->keyHold(KEY_LEFT_CTRL);
@@ -907,7 +904,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("volumeUp: NUM PLUS");
+					debugln("volumeUp: NUM PLUS");
 				}
 				*/
 				this->keyTap(KEYPAD_ADD, times); // 10
@@ -918,7 +915,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("volumeDown: NUM MINUS");
+					debugln("volumeDown: NUM MINUS");
 				}
 				*/
 				this->keyTap(KEYPAD_SUBTRACT, times); // 10
@@ -929,7 +926,7 @@ class AssettoCorsaCompetizione : public Game {
 			if (pressed) {
 				/*
 				if (DEBUG) {
-					Serial.println("toggleConsole: CTRL + ALT + C");
+					debugln("toggleConsole: CTRL + ALT + C");
 				}
 				*/
 				// press ~ to open console

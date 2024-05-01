@@ -16,7 +16,7 @@ class MultimediaKeyboard : public Game {
 			isKeyboard = true;
 			isConsumer = true;
 			if (DEBUG) {
-				Serial.println("MultimediaKeyboard");
+				debugln("MultimediaKeyboard");
 			}
 			easterEgg = true;
 		};

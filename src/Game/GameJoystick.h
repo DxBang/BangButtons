@@ -24,7 +24,7 @@ class GameJoystick : public Game {
 		void begin() {
 			// check if joystick is available
 			if (DEBUG) {
-				Serial.println("GameJoystick::begin()");
+				debugln("GameJoystick::begin()");
 			}
 			if (this->isJoystick) {
 				this->joystick->begin();
@@ -33,8 +33,8 @@ class GameJoystick : public Game {
 		}
 		void end() {
 			// check if joystick is available
-			if (DEBUG) {
-				Serial.println("GameJoystick::end()");
+			if (DEBUG > 1) {
+				debugln("GameJoystick::end()");
 			}
 			if (this->isJoystick) {
 				this->joystick->end();
@@ -46,14 +46,14 @@ class GameJoystick : public Game {
 			// int index = getButtonIndex(pin);
 			button = button - 1;
 			if (DEBUG) {
-				Serial.print("Joystick Button ");
-				Serial.print(button);
-				// Serial.print(" -> ");
-				// Serial.print(index);
-				Serial.print("/");
-				Serial.print(BANGED * 2);
-				Serial.print(" = ");
-				Serial.println(pressed);
+				debug("Joystick Button ");
+				debug(button);
+				// debug(" -> ");
+				// debug(index);
+				debug("/");
+				debug(BANGED * 2);
+				debug(" = ");
+				debugln(pressed);
 			}
 			// check if joystick is available
 			if (!this->joystick) {

@@ -13,7 +13,26 @@
 	#include <HID-Project.h>
 #endif
 
-#define DEBUG false
+#ifndef DEBUG
+	#define DEBUG 0
+#endif
+
+#if DEBUG >= 2
+	#define debug(x) Serial.print(x)
+	#define debugln(x) Serial.println(x)
+	#define bench(x) Serial.print(x)
+	#define benchln(x) Serial.println(x)
+#elif DEBUG >= 1
+	#define bench(x) Serial.print(x)
+	#define benchln(x) Serial.println(x)
+	#define debug(x)
+	#define debugln(x)
+#else
+	#define debug(x)
+	#define debugln(x)
+	#define bench(x)
+	#define benchln(x)
+#endif
 
 #define R_PIN 9
 #define G_PIN 10
@@ -158,14 +177,15 @@ class Game {
 		bool isConsumer = false;
 		bool isJoystick = false;
 		bool banged = false;
+		bool easterEgg = false;
 		int miniDelay = 5;
 		int shortDelay = 10;
 		int mediumDelay = 50;
 		int longDelay = 100;
 		int longerDelay = 200;
 		int longestDelay = 500;
-		int tapDelay = 50;
-		int recurrenceDelay = 100;
+		int tapDelay = 25;
+		int recurrenceDelay = 25;
 		// Joystick_ *joystick;
 		Game() {};
 		virtual void button(unsigned char button, bool pressed) {};
@@ -196,8 +216,8 @@ class Game {
 		void keyPress(KeyboardKeycode key) {
 			/*
 			if (DEBUG) {
-				Serial.print("press: ");
-				Serial.println(key);
+				debug("press: ");
+				debugln(key);
 			}
 			*/
 			Keyboard.press(key);
@@ -205,10 +225,10 @@ class Game {
 		void keyHold(KeyboardKeycode key, unsigned int miliseconds = 0) {
 			/*
 			if (DEBUG) {
-				Serial.print("KEY HOLD: ");
-				Serial.print(key);
-				Serial.print(" ");
-				Serial.println(miliseconds);
+				debug("KEY HOLD: ");
+				debug(key);
+				debug(" ");
+				debugln(miliseconds);
 			}
 			*/
 			if (miliseconds) {
@@ -223,10 +243,10 @@ class Game {
 		void keyTap(KeyboardKeycode key, unsigned char times = 1) {
 			/*
 			if (DEBUG) {
-				Serial.print("KEY TAP: ");
-				Serial.print(key);
-				Serial.print(" ");
-				Serial.println(times);
+				debug("KEY TAP: ");
+				debug(key);
+				debug(" ");
+				debugln(times);
 			}
 			*/
 			for (unsigned char i = 0; i < times; i++) {
@@ -243,8 +263,8 @@ class Game {
 		void keyRelease(KeyboardKeycode key) {
 			/*
 			if (DEBUG) {
-				Serial.print("KEY RELEASE: ");
-				Serial.println(key);
+				debug("KEY RELEASE: ");
+				debugln(key);
 			}
 			*/
 			Keyboard.release(key);
@@ -252,7 +272,7 @@ class Game {
 		void keyReleaseAll() {
 			/*
 			if (DEBUG) {
-				Serial.println("KEY RELEASE ALL");
+				debugln("KEY RELEASE ALL");
 			}
 			*/
 			Keyboard.releaseAll();
@@ -267,8 +287,8 @@ class Game {
 		void consumerPress(ConsumerKeycode key) {
 			/*
 			if (DEBUG) {
-				Serial.print("press: ");
-				Serial.println(key);
+				debug("press: ");
+				debugln(key);
 			}
 			*/
 			Consumer.press(key);
@@ -276,10 +296,10 @@ class Game {
 		void consumerHold(ConsumerKeycode key, unsigned int miliseconds = 0) {
 			/*
 			if (DEBUG) {
-				Serial.print("KEY HOLD: ");
-				Serial.print(key);
-				Serial.print(" ");
-				Serial.println(miliseconds);
+				debug("KEY HOLD: ");
+				debug(key);
+				debug(" ");
+				debugln(miliseconds);
 			}
 			*/
 			if (miliseconds) {
@@ -294,10 +314,10 @@ class Game {
 		void consumerTap(ConsumerKeycode key, unsigned char times = 1) {
 			/*
 			if (DEBUG) {
-				Serial.print("KEY TAP: ");
-				Serial.print(key);
-				Serial.print(" ");
-				Serial.println(times);
+				debug("KEY TAP: ");
+				debug(key);
+				debug(" ");
+				debugln(times);
 			}
 			*/
 			for (unsigned char i = 0; i < times; i++) {
@@ -314,8 +334,8 @@ class Game {
 		void consumerRelease(ConsumerKeycode key) {
 			/*
 			if (DEBUG) {
-				Serial.print("KEY RELEASE: ");
-				Serial.println(key);
+				debug("KEY RELEASE: ");
+				debugln(key);
 			}
 			*/
 			Consumer.release(key);
@@ -323,7 +343,7 @@ class Game {
 		void consumerReleaseAll() {
 			/*
 			if (DEBUG) {
-				Serial.println("KEY RELEASE ALL");
+				debugln("KEY RELEASE ALL");
 			}
 			*/
 			Consumer.releaseAll();
@@ -336,8 +356,8 @@ class Game {
 				return;
 			}
 			if (DEBUG) {
-				Serial.print("JOY PRESS: ");
-				Serial.println(button);
+				debug("JOY PRESS: ");
+				debugln(button);
 			}
 			this->joystick->pressButton(button);
 		}
@@ -346,10 +366,10 @@ class Game {
 				return;
 			}
 			if (DEBUG) {
-				Serial.print("JOY HOLD: ");
-				Serial.print(button);
-				Serial.print(" ");
-				Serial.println(miliseconds);
+				debug("JOY HOLD: ");
+				debug(button);
+				debug(" ");
+				debugln(miliseconds);
 			}
 			if (miliseconds) {
 				this->joystick->pressButton(button);
@@ -365,10 +385,10 @@ class Game {
 				return;
 			}
 			if (DEBUG) {
-				Serial.print("JOY TAP: ");
-				Serial.print(button);
-				Serial.print(" ");
-				Serial.println(times);
+				debug("JOY TAP: ");
+				debug(button);
+				debug(" ");
+				debugln(times);
 			}
 			for (unsigned char i = 0; i < times; i++) {
 				this->joystick->pressButton(button);
@@ -386,8 +406,8 @@ class Game {
 				return;
 			}
 			if (DEBUG) {
-				Serial.print("JOY RELEASE: ");
-				Serial.println(button);
+				debug("JOY RELEASE: ");
+				debugln(button);
 			}
 			this->joystick->releaseButton(button);
 		}
@@ -400,7 +420,6 @@ class Game {
 			}
 		}
 		*/
-
 };
 
 class Controller {
@@ -454,6 +473,9 @@ class Controller {
 		};
 		Color* getColor() {
 			return this->color;
+		};
+		bool isEasterEgg() {
+			return this->game->easterEgg;
 		};
 };
 

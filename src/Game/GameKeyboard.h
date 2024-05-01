@@ -15,7 +15,7 @@ class GameKeyboard : public Game {
 		GameKeyboard() {
 			isKeyboard = true;
 			if (DEBUG) {
-				Serial.println("GameKeyboard");
+				debugln("GameKeyboard");
 			}
 		};
 		void button(unsigned char button, bool pressed) override {
